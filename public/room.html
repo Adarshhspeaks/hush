@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hush room</title><link rel="stylesheet" href="/style.css">
+<script type="module" src="/theme.js"></script></head>
+<body class="chatpage">
+<header class="bar">
+  <div><b>🔒 Hush</b> <span id="count" class="pill">…</span></div>
+  <div class="actions">
+    <button class="mini" id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+    <button class="mini" id="qr">QR</button>
+    <button class="mini" id="invite">Copy invite</button>
+    <button class="mini" id="rename">Rename</button>
+    <button class="mini danger" id="destroy" hidden>Destroy</button>
+  </div>
+</header>
+<p class="banner" id="banner">Encrypted in your browser. Anyone with the full link can read this chat, so only share it with people you trust.</p>
+<div id="log" class="log" aria-live="polite"></div>
+<div id="typing" class="typing" aria-live="polite"></div>
+<div id="emoji" class="emoji" hidden></div>
+<div id="replyBar" class="reply-bar" hidden>
+  <div class="reply-indicator"></div>
+  <div class="reply-details">
+    <div class="reply-head">Replying to <b id="replyToName"></b></div>
+    <div class="reply-snippet" id="replyToText"></div>
+  </div>
+  <button type="button" class="mini reply-cancel" id="cancelReply" aria-label="Cancel reply">✕</button>
+</div>
+<div id="recbar" class="recbar" hidden>
+  <span class="dot"></span><span id="rtime">0:00</span><span class="grow">Recording…</span>
+  <button class="mini" id="rcancel" type="button">Cancel</button>
+  <button class="btn pink small" id="rsend" type="button">Send</button>
+</div>
+<form id="f" class="composer" autocomplete="off">
+  <button type="button" class="ib" id="emojiBtn" aria-label="Emoji">😊</button>
+  <button type="button" class="ib" id="attach" aria-label="Send photo">📎</button>
+  <input type="file" id="file" accept="image/*" multiple hidden>
+  <input id="text" maxlength="1000" placeholder="Message" aria-label="Message">
+  <button type="button" class="ib" id="mic" aria-label="Record voice message">🎤</button>
+  <button class="btn pink" id="send">Send</button>
+</form>
+
+<div id="lightbox" class="overlay" hidden>
+  <img id="lbimg" alt="Photo">
+  <div class="lbbar"><a id="lbdl" class="btn lemon small" download="hush-photo.jpg">⬇ Download</a><button class="btn small" id="lbclose" type="button">Close</button></div>
+</div>
+<div id="qrbox" class="overlay" hidden>
+  <div class="card qrcard">
+    <b>Scan to join</b>
+    <img id="qrimg" alt="QR code for the invite link" width="240" height="240">
+    <p class="hint">This QR contains the encryption key. Only show it to people you want in the room.</p>
+    <button class="btn small" id="qrclose" type="button">Close</button>
+  </div>
+</div>
+<script type="module" src="/room.js"></script></body></html>
