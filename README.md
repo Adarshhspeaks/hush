@@ -21,8 +21,15 @@ No accounts, no phone numbers. Create a room, share the link, chat.
 
 Encryption needs a secure context: `localhost` or `https`. Opening it by LAN IP over plain http will not work, deploy it (Render gives https) to test with phones.
 
-## Deploy (Render)
-Web service, build `npm install`, start `npm start`. No database, no env vars. Rooms live in memory, so a restart wipes them (a feature).
+## Deploy to Render (Free HTTPS)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Adarshhspeaks/hush)
+
+1. Click the **Deploy to Render** button above (or open [dashboard.render.com](https://dashboard.render.com), click **New +** → **Web Service**, and connect `Adarshhspeaks/hush`).
+2. Build command: `npm install`
+3. Start command: `npm start`
+4. Render automatically provisions free HTTPS, which enables Web Crypto (`AES-256-GCM`) and microphone access on mobile browsers.
+5. Rooms live in memory, so restarting wipes them clean.
 
 ## Features
 - Text chat, random nicknames (changeable), online count, history for late joiners (last 200 messages)
