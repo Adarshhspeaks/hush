@@ -1,0 +1,42 @@
+export default [
+  {
+    ignores: ['node_modules/**', 'public/vendor/**'],
+  },
+  {
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        indexedDB: 'readonly',
+        crypto: 'readonly',
+        Blob: 'readonly',
+        Image: 'readonly',
+        Event: 'readonly',
+        URL: 'readonly',
+        createImageBitmap: 'readonly',
+        MediaRecorder: 'readonly',
+        prompt: 'readonly',
+        alert: 'readonly',
+        confirm: 'readonly',
+        location: 'readonly',
+        fetch: 'readonly',
+        console: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-undef': 'error',
+    },
+  },
+];

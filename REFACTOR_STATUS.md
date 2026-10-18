@@ -117,7 +117,7 @@
 - [x] client JS split into pages/ core/ messages/ features/, registry in place, every kind moved
 - [x] theme-init.js still a classic head script, no flash
 - [x] no inline scripts/styles/handlers, CSP clean
-- [ ] package.json, .env.example, LICENSE, README, PROTOCOL, SECURITY, architecture docs written
+- [x] package.json, .env.example, LICENSE, README, PROTOCOL, SECURITY, architecture docs written
 - [ ] lint + format pass, no dead files or unused code
 - [ ] full manual test of ALL features passed in two browser windows + mobile width
 - [ ] bugs found during the refactor fixed in separate commits
@@ -126,5 +126,8 @@
 ---
 
 ## 4. Current State & Exact Next Step
-- **Current Step**: STEP 3 Complete (Client CSS and JS modularized into target structure with kind registry, zero inline code, strict CSP preserved).
-- **Exact Next Step**: STEP 4 — Update package.json scripts (`start = node server/index.js`, `test = node --test tests/*.test.js tests/test_stickers_and_security.js`), `.env.example`, `LICENSE` (MIT), `README.md`, `PROTOCOL.md`, `SECURITY.md`, and `docs/architecture.md`. Commit.
+- **Current Step**: STEP 4 Complete (Documentation, LICENSE, PROTOCOL.md, SECURITY.md, architecture.md, and configs updated).
+- **Exact Next Step**: STEP 5 — Lint and format pass:
+  - Check with npm test
+  - Check for unused code, leftover files, circular dependencies, or console.log noise.
+  - Commit.
