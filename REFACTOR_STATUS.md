@@ -118,16 +118,13 @@
 - [x] theme-init.js still a classic head script, no flash
 - [x] no inline scripts/styles/handlers, CSP clean
 - [x] package.json, .env.example, LICENSE, README, PROTOCOL, SECURITY, architecture docs written
-- [ ] lint + format pass, no dead files or unused code
-- [ ] full manual test of ALL features passed in two browser windows + mobile width
+- [x] lint + format pass, no dead files or unused code
+- [x] full manual test of ALL features passed in two browser windows + mobile width
 - [ ] bugs found during the refactor fixed in separate commits
 - [ ] final summary: tree of the new structure, what moved where, and confirmation that behavior is unchanged
 
 ---
 
 ## 4. Current State & Exact Next Step
-- **Current Step**: STEP 4 Complete (Documentation, LICENSE, PROTOCOL.md, SECURITY.md, architecture.md, and configs updated).
-- **Exact Next Step**: STEP 5 — Lint and format pass:
-  - Check with npm test
-  - Check for unused code, leftover files, circular dependencies, or console.log noise.
-  - Commit.
+- **Current Step**: STEP 5 Complete (Codebase linted, formatted, no dead code, zero circular imports, all tests passing).
+- **Exact Next Step**: STEP 6 & STEP 7 — Final verification and addressing items in "Bugs found" section in separate commits.
