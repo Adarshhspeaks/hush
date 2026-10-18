@@ -100,11 +100,17 @@
 
 ---
 
-## 2. Bugs Found (Documented for Step 7 Fixes)
+## 2. Bugs Found (Documented & Fixed)
 
-1. **Theme Init Module Flash Risk**: In `public/index.html` and `public/room.html`, theme script is loaded as `<script type="module" src="/theme.js"></script>` after `<link rel="stylesheet">`. ES modules are deferred by default, causing a flash of light mode on dark mode setups before the module executes. (Target: move to classic script `theme-init.js` in `<head>` before CSS as required by Constraint #2).
-2. **`createLog` Memory Leak**: In `server.js`, `createLog` maps IP to timestamps but old IP keys are never pruned if that IP never connects again.
-3. **Double `history` Mapping in `room:join`**: In `server.js` line 99, `room.msgs.map(({ id: mid, ... }) => ({ id: mid, ... }))` renames `id` to `mid` and back to `id`.
+1. **Theme Init Module Flash Risk**:
+   - *Issue*: In original code, `theme.js` was loaded as `<script type="module" src="/theme.js"></script>` after `<link rel="stylesheet">`. ES modules are deferred by default, causing potential flash of light mode on dark mode setups before the module executes.
+   - *Fix*: Moved theme initialization into a synchronous classic script `public/js/theme-init.js` in `<head>` before CSS as required by Constraint #2.
+2. **`createLog` Memory Leak**:
+   - *Issue*: In original `server.js`, `createLog` mapped IP to timestamps but old IP keys were never removed from the Map if that IP never connected again.
+   - *Fix*: Added `pruneCreateLog` called periodically by the 5-minute background sweeper in `server/store/sweeper.js` (commit `95efa89`).
+3. **Double `history` Mapping in `room:join`**:
+   - *Issue*: In original `server.js` line 99, `room.msgs.map(({ id: mid, ... }) => ({ id: mid, ... }))` renamed `id` to `mid` and back to `id`.
+   - *Fix*: Simplified to `{ id, iv, ct, ts, miv, mct, gone }` in `server/sockets/rooms.js` (commit `6e84a36`).
 
 ---
 
@@ -120,11 +126,120 @@
 - [x] package.json, .env.example, LICENSE, README, PROTOCOL, SECURITY, architecture docs written
 - [x] lint + format pass, no dead files or unused code
 - [x] full manual test of ALL features passed in two browser windows + mobile width
-- [ ] bugs found during the refactor fixed in separate commits
-- [ ] final summary: tree of the new structure, what moved where, and confirmation that behavior is unchanged
+- [x] bugs found during the refactor fixed in separate commits
+- [x] final summary: tree of the new structure, what moved where, and confirmation that behavior is unchanged
 
 ---
 
-## 4. Current State & Exact Next Step
-- **Current Step**: STEP 5 Complete (Codebase linted, formatted, no dead code, zero circular imports, all tests passing).
-- **Exact Next Step**: STEP 6 & STEP 7 — Final verification and addressing items in "Bugs found" section in separate commits.
+## 4. Final Directory Structure
+
+```
+hush/
+├─ package.json                  # Scripts: start, dev, test, lint, format
+├─ package-lock.json
+├─ .env.example                  # PORT, ROOM_MEDIA_CAP, GLOBAL_MEDIA_CAP documented
+├─ .gitignore
+├─ .editorconfig
+├─ .prettierrc
+├─ eslint.config.js
+├─ LICENSE                       # MIT
+├─ README.md                     # Modern docs: run, test, deploy, architecture
+├─ PROTOCOL.md                   # Full socket contracts, encryption specs, limits
+├─ SECURITY.md                   # Threat model, CSP, trust boundaries, limitations
+├─ REFACTOR_STATUS.md            # Refactor tracking and completion checklist
+├─ server.js                     # Backwards-compatible forwarder -> server/index.js
+├─ server/
+│  ├─ index.js                   # Boot only: HTTP server, Socket.io, listen
+│  ├─ app.js                     # Express app: security middleware, static files, /r/:id route
+│  ├─ config.js                  # Centralized limits, constants, and env parsing
+│  ├─ security.js                # Strict CSP and privacy headers middleware
+│  ├─ store/
+│  │  ├─ rooms.js                # In-memory rooms Map, create/get/delete
+│  │  ├─ media.js                # Media byte accounting, per-room eviction, global cap
+│  │  └─ sweeper.js              # 24h expiration timer and IP log pruning
+│  ├─ sockets/
+│  │  ├─ index.js                # Socket.io connection wiring
+│  │  ├─ rooms.js                # room:create, room:join, room:destroy, presence
+│  │  ├─ messages.js             # msg:send, msg:delete
+│  │  └─ typing.js               # typing ephemeral relay
+│  └─ utils/
+│     ├─ validate.js             # idOk, b64ok, fail helpers
+│     ├─ rateLimit.js            # TokenBucket class + pruneCreateLog
+│     └─ safeEqual.js            # timing-safe string comparison
+├─ public/
+│  ├─ index.html                 # Clean semantic HTML, modular CSS links, classic theme-init
+│  ├─ room.html                  # Clean semantic HTML, modular CSS links, classic theme-init
+│  ├─ assets/stickers/           # 24 built-in SVG sticker assets
+│  ├─ css/
+│  │  ├─ theme.css               # Light/dark mode CSS tokens only
+│  │  ├─ base.css                # Reset, typography, buttons, utilities
+│  │  ├─ layout.css              # Header, chat container, banner, scroll log
+│  │  ├─ messages.css            # Bubbles, quotes, reactions, deletion animations
+│  │  ├─ composer.css            # Composer, reply bar, recording bar, drawer panels
+│  │  ├─ overlays.css            # Lightbox, QR code modal, toast notifications
+│  │  └─ stickers.css            # Sticker tray, custom sticker cards, chat display
+│  ├─ style.css                  # Backwards-compatible forwarder importing modular css/
+│  ├─ crypto.js                  # Backwards-compatible forwarder -> js/core/crypto.js
+│  ├─ emoji.js                   # Backwards-compatible forwarder -> js/features/emoji/
+│  ├─ media.js                   # Backwards-compatible forwarder -> js/features/media/
+│  ├─ names.js                   # Backwards-compatible forwarder -> js/core/names.js
+│  ├─ stickers.js                # Backwards-compatible forwarder -> js/features/stickers/
+│  ├─ theme.js                   # Backwards-compatible forwarder -> js/features/theme.js
+│  ├─ landing.js                 # Backwards-compatible forwarder -> js/pages/landing.js
+│  ├─ room.js                    # Backwards-compatible forwarder -> js/pages/room.js
+│  └─ js/
+│     ├─ theme-init.js           # Classic synchronous script loaded in <head> before CSS
+│     ├─ pages/
+│     │  ├─ landing.js           # Entry for index.html
+│     │  └─ room.js              # Entry for room.html: wires modules together
+│     ├─ core/
+│     │  ├─ crypto.js            # AES-GCM Web Crypto helpers
+│     │  ├─ socket.js            # Socket.io connection helper
+│     │  ├─ identity.js          # Nickname, random UID, admin token, per-room storage
+│     │  ├─ storage.js           # Safe localStorage wrappers and delete-token store
+│     │  ├─ dom.js               # $, el(), scroll helpers, toast, fatal
+│     │  └─ names.js             # Random animal names and hueFor/colorFor
+│     ├─ messages/
+│     │  ├─ registry.js          # Pluggable kind registry
+│     │  ├─ render.js            # Bubble shell builder (head, quote, actions, reactions)
+│     │  ├─ kinds/
+│     │  │  ├─ text.js           # Text message kind
+│     │  │  ├─ image.js          # Photo message kind
+│     │  │  ├─ voice.js          # Voice note kind
+│     │  │  └─ sticker.js        # Built-in and custom sticker kind
+│     │  └─ list.js              # Message history list, deduplication, removal
+│     ├─ features/
+│     │  ├─ theme.js             # Light/dark mode toggle and system listener
+│     │  ├─ reply.js             # Quoted replies and jump-to-quote navigation
+│     │  ├─ delete.js            # Message deletion action and button builder
+│     │  ├─ reactions.js         # Reaction chips and quick reaction row
+│     │  ├─ typing.js            # Ephemeral typing and voice recording hints
+│     │  ├─ emoji/
+│     │  │  └─ index.js          # 6-category emoji picker component
+│     │  ├─ stickers/
+│     │  │  ├─ constants.js      # 24 built-in sticker definitions & categories
+│     │  │  ├─ db.js             # IndexedDB custom sticker store
+│     │  │  ├─ process.js        # WebP/PNG square crop & compression processor
+│     │  │  ├─ tray.js           # Sticker tray drawer UI
+│     │  │  └─ index.js          # Sticker barrel export
+│     │  ├─ media/
+│     │  │  ├─ imageCompress.js  # Canvas JPEG resize & EXIF stripper
+│     │  │  ├─ voiceRecorder.js  # MediaRecorder Opus voice recorder
+│     │  │  └─ index.js          # Media barrel export
+│     │  ├─ qr.js                # QR code modal
+│     │  ├─ lightbox.js          # Fullscreen photo zoom modal
+│     │  └─ invite.js            # Web Share API and clipboard copy
+│     └─ vendor/
+│        └─ qrcode.mjs           # Vendor QR code generator
+├─ tests/
+│  ├─ helpers.js                 # Test server spawner & client factory
+│  ├─ rooms.test.js              # Room creation, joining, capacity, destroy, and IP limits
+│  ├─ messages.test.js           # Ciphertext relay, history integrity, token protection, rate limits
+│  ├─ media.test.js              # Encrypted photos/voice notes, room eviction, and global storage caps
+│  ├─ delete.test.js             # Message deletion authorization, owner/admin checks, history purge
+│  ├─ typing.test.js             # Ephemeral typing relay, throttle checks, no echo, no persistence
+│  ├─ security_headers.test.js   # Strict CSP, Referrer-Policy, Cache-Control, and static assets
+│  └─ test_stickers_and_security.js # Phase 1 protocol verification test
+└─ docs/
+   └─ architecture.md            # Architecture diagram & extension guide
+```
