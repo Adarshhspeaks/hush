@@ -36,3 +36,15 @@ export function checkRoomCreationLimit(ip) {
   createLog.set(ip, recent);
   return true;
 }
+
+// Prune IP log entries older than 1 hour to prevent memory leak
+export function pruneCreateLog(now = Date.now()) {
+  for (const [ip, timestamps] of createLog) {
+    const valid = timestamps.filter((t) => now - t < 3600e3);
+    if (valid.length === 0) {
+      createLog.delete(ip);
+    } else {
+      createLog.set(ip, valid);
+    }
+  }
+}

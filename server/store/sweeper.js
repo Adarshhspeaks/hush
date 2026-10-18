@@ -2,9 +2,11 @@
 import { TTL, SWEEPER_INTERVAL } from '../config.js';
 import { rooms, deleteRoom } from './rooms.js';
 import { dropMedia } from './media.js';
+import { pruneCreateLog } from '../utils/rateLimit.js';
 
 export function sweep() {
   const now = Date.now();
+  pruneCreateLog(now);
   for (const [id, room] of rooms) {
     room.msgs = room.msgs.filter((m) => {
       if (now - m.ts < TTL) return true;
