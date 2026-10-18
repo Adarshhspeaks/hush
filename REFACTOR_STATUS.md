@@ -112,7 +112,7 @@
 
 - [x] inventory of events, message kinds, limits and features written
 - [x] characterization tests (including the newer events) written and passing on old code
-- [ ] server split into server/ modules, tests green
+- [x] server split into server/ modules, tests green
 - [ ] client CSS split into css/ files, visual check light + dark
 - [ ] client JS split into pages/ core/ messages/ features/, registry in place, every kind moved
 - [ ] theme-init.js still a classic head script, no flash
@@ -126,20 +126,31 @@
 ---
 
 ## 4. Current State & Exact Next Step
-- **Current Step**: STEP 1 Complete (All 22 characterization and security tests passing against current codebase).
-- **Exact Next Step**: STEP 2 — Server refactor into modular `server/` structure:
-  - `server/config.js` (limits, env parsing)
-  - `server/security.js` (CSP and security headers)
-  - `server/utils/validate.js` (`idOk`, `b64ok`)
-  - `server/utils/safeEqual.js` (`safeEq`)
-  - `server/utils/rateLimit.js` (token bucket + per-IP room creation tracker)
-  - `server/store/rooms.js` (in-memory rooms Map, create, get, delete)
-  - `server/store/media.js` (dropMedia, room & global media accounting)
-  - `server/store/sweeper.js` (24h TTL timer)
-  - `server/sockets/index.js` (wires io connection)
-  - `server/sockets/rooms.js` (`room:create`, `room:join`, `room:destroy`, `disconnect`, `presence`)
-  - `server/sockets/messages.js` (`msg:send`, `msg:delete`)
-  - `server/sockets/typing.js` (`typing` relay)
-  - `server/app.js` (Express app creation, security middleware, static files, `/r/:id` route)
-  - `server/index.js` (Boot only: create http server, attach io, listen on PORT)
-  - Run all tests to confirm they stay green, then commit.
+- **Current Step**: STEP 2 Complete (Server modularized into `server/`, 100% green tests).
+- **Exact Next Step**: STEP 3 — Client refactor:
+  1. Move built-in SVG sticker assets from `public/stickers/` to `public/assets/stickers/` and update paths without breaking.
+  2. Split `public/style.css` into `public/css/`:
+     - `theme.css` (variables only)
+     - `base.css` (reset, typography, buttons, forms, utilities)
+     - `layout.css` (chat page layout, header, banner)
+     - `messages.css` (bubbles, quotes, reactions, tombstones, media)
+     - `composer.css` (composer, emoji/sticker panel, reply bar, recording bar)
+     - `overlays.css` (lightbox, QR modal)
+     - `stickers.css` (sticker tray, custom sticker cards, etc.)
+  3. Split client JavaScript into `public/js/`:
+     - `theme-init.js` (classic script in `<head>` before CSS to prevent dark-mode flash)
+     - `pages/landing.js`
+     - `pages/room.js` (entry only wiring modules)
+     - `core/crypto.js`
+     - `core/socket.js`
+     - `core/identity.js`
+     - `core/storage.js`
+     - `core/dom.js`
+     - `core/names.js`
+     - `messages/registry.js`
+     - `messages/render.js`
+     - `messages/list.js`
+     - `messages/kinds/` (text, img, voice, react, sticker)
+     - `features/` (stickers, emoji, media, reply, reactions, delete, qr, lightbox, etc.)
+  4. Update HTML `<link>` and `<script>` paths. Keep CSP strict.
+  5. Manual verification in two browser windows (light/dark/mobile). Commit.
