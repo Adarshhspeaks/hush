@@ -1,17 +1,127 @@
-# Hush 🤫 — Anonymous End-to-End Encrypted Chat Rooms
+# Hush 🤫
 
-Anonymous, disposable, end-to-end encrypted chat rooms. No accounts, no phone numbers, no tracking cookies, and no database. Create a room, share the link, chat securely.
+Anonymous end-to-end-encrypted chat rooms in your browser, no login, no phone number.
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Adarshhspeaks/hush)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
+[![No Database](https://img.shields.io/badge/database-none%20(in--memory)-orange.svg)](#)
+
+[Live demo](ADD_LINK_HERE)
 
 ---
 
-## How It Works
+## Screenshots
 
-1. **Client-Side Cryptography**: When you create a room, the browser generates an `AES-256-GCM` key using Web Crypto.
-2. **Key in Fragment**: The key resides solely in the URL hash fragment (`/r/<roomId>#<key>`). Browsers never transmit URL fragments over HTTP or WebSockets to the server.
-3. **Zero Plaintext on the Server**: All messages, media, stickers, nicknames, user IDs, replies, and reactions are encrypted in the browser with fresh 12-byte IVs before transmission.
-4. **Ephemeral In-Memory Relay**: The server is a dumb relay. Rooms, messages, and media exist in server memory only—nothing is written to disk. Restarting the server wipes everything immediately.
+| Light Mode | Dark Mode | Mobile View |
+| :---: | :---: | :---: |
+| ![Light Mode](docs/screenshots/chat-light.png) | ![Dark Mode](docs/screenshots/chat-dark.png) | ![Mobile View](docs/screenshots/mobile.png) |
+
+---
+
+## Features
+
+### 🔒 Privacy
+- **Client-Side AES-256-GCM**: Encryption happens in the browser via native Web Crypto.
+- **Key Stays in `#` Fragment**: The room key is in the URL `#` hash and is never sent to the server.
+- **Zero Database**: Rooms, messages, and media exist in server memory only; restart wipes everything.
+- **Strict CSP**: Zero inline scripts, zero inline styles, no external CDNs, no tracking cookies.
+
+### 💬 Chat
+- **Encrypted Text**: Messages up to 1,000 characters with markdown-safe text rendering.
+- **Quoted Replies**: Quote messages with matching author hue and click-to-jump with pulse animation.
+- **Typing Indicator**: Real-time "typing…" hints (encrypted, ephemeral, never stored in history).
+- **History for Late Joiners**: Last 200 messages preserved in memory during room lifetime.
+
+### 📸 Media
+- **Photo Sharing**: Client canvas auto-resizes to JPEG and strips EXIF/GPS metadata.
+- **Photo Lightbox**: Fullscreen modal viewer with direct download link.
+- **Voice Notes**: Opus audio via MediaRecorder (up to 2 minutes) with audio player & download.
+- **Recording Indicator**: Live "recording…" status broadcast to room members.
+
+### ✨ Fun
+- **24 Built-in Vector Stickers**: SVG packs across Reactions, Love, Funny, and Words with search.
+- **Make-Your-Own Stickers**: Square crop & WebP under 100 KB, saved in local IndexedDB (up to 60).
+- **Emoji Picker & Reactions**: 6 emoji categories, quick reaction row (👍, ❤️, 😂, 😮, 😢, 🙏), and counter chips.
+- **Random Animal Nicknames**: Colorful anonymous animal names with deterministic HSL avatar colors.
+
+### 🛡️ Room Control
+- **Delete for Everyone**: Author (`delToken`) or room creator (`adminToken`) can delete messages in real-time.
+- **Creator Room Destruction**: One-click destruction by creator drops media and disconnects all sockets.
+- **24-Hour Expiration**: Background sweeper automatically purges expired messages and idle rooms.
+- **Room Nickname Rename**: Change your display name locally for the room at any time.
+
+### 🎨 App Feel
+- **Theme Switcher**: Instant dark and light mode toggle with system preference synchronization.
+- **Zero-Flash Theme Init**: Classic script in `<head>` applies theme before CSS paints.
+- **QR Code Invites**: Built-in client QR generator for mobile camera scanning.
+- **Invite Sharing**: Native Web Share API integration with automatic clipboard fallback.
+
+---
+
+## How the Encryption Works
+
+When a room is created, the browser generates an `AES-256-GCM` key using Web Crypto. The key is placed in the URL `#` fragment (`/r/<id>#<key>`), which browsers never transmit over HTTP or WebSockets.
+
+```
+[Sender Browser]                            [Relay Server]                           [Recipient Browser]
+       │                                           │                                           │
+1. Encrypts payload with key in #fragment          │                                           │
+   AES-256-GCM -> {iv, ct}                         │                                           │
+       │                                           │                                           │
+       │─────── socket.emit('msg:send', {iv, ct}) ─>│                                           │
+       │                                           │── io.to(room).emit('msg', {id, iv, ct}) ──>│
+       │                                           │                                           │
+       │                                           │                                  2. Decrypts with key in #fragment
+       │                                           │                                     AES-256-GCM -> plaintext
+```
+
+Each message and media attachment receives a fresh, random 12-byte IV. The server only relays ciphertext.
+
+---
+
+## Honest Limits & Threat Model
+
+- **Invite Link Access**: Anyone with the full link (including the `#` fragment) can read the room.
+- **Malicious Server Operator**: A compromised server could serve tampered JavaScript. Keep the code small and auditable, or self-host.
+- **Metadata Visibility**: The server sees IP addresses, connection times, member counts, and packet sizes.
+- **Nickname Forgery**: All room participants share the room key; nicknames are for chat clarity, not identity verification. Destructive actions (`msg:delete`, `room:destroy`) use separate random secret tokens.
+- **No Forward Secrecy**: If a room key is leaked, past intercepted messages can be decrypted.
+- **View-Once Limitation**: Any client that can display a message can capture it.
+
+For full cryptographic analysis and threat model, see [SECURITY.md](SECURITY.md).
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/Adarshhspeaks/hush.git
+cd hush
+npm install
+npm start
+```
+
+Open `http://localhost:3000` in your browser.
+
+> [!NOTE]
+> Web Crypto requires a secure context: `localhost` or `https`. Accessing the server over a local network IP on plain `http://` will disable Web Crypto.
+
+---
+
+## Deploy on Render
+
+1. Link your GitHub fork to [Render](https://render.com) as a **Web Service**.
+2. **Build Command**: `npm install`
+3. **Start Command**: `npm start`
+4. Set optional environment variables:
+
+| Variable | Default | Description |
+|---|---|---|
+| `PORT` | `3000` | Port to listen on |
+| `ROOM_MEDIA_CAP` | `12000000` (12 MB) | Max media ciphertext stored per room before oldest is dropped |
+| `GLOBAL_MEDIA_CAP` | `120000000` (120 MB) | Max media ciphertext stored across whole server |
+
+Render provisions free HTTPS, enabling Web Crypto and microphone permissions on mobile browsers.
 
 ---
 
@@ -19,168 +129,44 @@ Anonymous, disposable, end-to-end encrypted chat rooms. No accounts, no phone nu
 
 ```
 hush/
-├─ server/
-│  ├─ index.js               # Boot script: creates HTTP server, attaches Socket.io, listens
-│  ├─ app.js                 # Express application: security headers, static files, /r/:id route
-│  ├─ config.js              # Centralized limits, constants, and environment variable parsing
-│  ├─ security.js            # Strict Content-Security-Policy and privacy headers middleware
-│  ├─ store/
-│  │  ├─ rooms.js            # In-memory rooms Map, create/get/delete operations
-│  │  ├─ media.js            # Media byte accounting, per-room eviction, and global storage cap
-│  │  └─ sweeper.js          # Background 24h expiration timer
-│  ├─ sockets/
-│  │  ├─ index.js            # Socket.io connection wiring and per-socket context
-│  │  ├─ rooms.js            # room:create, room:join, room:destroy, presence, disconnect
-│  │  ├─ messages.js         # msg:send, msg:delete
-│  │  └─ typing.js           # typing & recording ephemeral relay
-│  └─ utils/
-│     ├─ validate.js         # ID format and Base64 size validation helpers
-│     ├─ rateLimit.js        # Token-bucket message rate limiter & per-IP room creation tracker
-│     └─ safeEqual.js        # Constant-time timing-safe string comparison
-├─ public/
-│  ├─ index.html             # Landing page
-│  ├─ room.html              # Chat room page
-│  ├─ assets/stickers/       # 24 built-in SVG sticker assets
-│  ├─ css/
-│  │  ├─ theme.css           # Light and dark mode CSS variables
-│  │  ├─ base.css            # CSS reset, typography, buttons, utilities
-│  │  ├─ layout.css          # Chat container, header bar, banner, and message log
-│  │  ├─ messages.css        # Message bubbles, quotes, reactions, deletion animations
-│  │  ├─ composer.css        # Composer form, reply bar, recording bar, drawer panels
-│  │  ├─ overlays.css        # Lightbox modal, QR code card, toast notifications
-│  │  └─ stickers.css        # Sticker tray, custom sticker cards, and chat sticker display
-│  └─ js/
-│     ├─ theme-init.js       # Synchronous classic script in <head> to prevent dark-mode flash
-│     ├─ pages/
-│     │  ├─ landing.js       # Landing page controller
-│     │  └─ room.js          # Room orchestrator: wires modules and features together
-│     ├─ core/
-│     │  ├─ crypto.js        # Web Crypto AES-256-GCM helpers
-│     │  ├─ socket.js        # Socket.io connection loader
-│     │  ├─ identity.js      # Nickname, random UID, admin token, and key management
-│     │  ├─ storage.js       # Safe localStorage/sessionStorage wrappers and delete-token store
-│     │  ├─ dom.js           # DOM query, element builder, scroll, and notification helpers
-│     │  └─ names.js         # Random anonymous animal names and stable HSL avatar colors
-│     ├─ messages/
-│     │  ├─ registry.js      # Pluggable kind registry for message types
-│     │  ├─ render.js        # Message bubble shell builder (metadata, actions, reactions)
-│     │  ├─ kinds/           # Individual kind handlers: text, image, voice, sticker
-│     │  └─ list.js          # Message list state, history deduplication, and removal
-│     ├─ features/
-│     │  ├─ theme.js         # Light/dark mode switcher and OS preference listener
-│     │  ├─ reply.js         # Quoted replies and jump-to-quote navigation
-│     │  ├─ delete.js        # Message deletion for everyone (author and admin)
-│     │  ├─ reactions.js     # Emoji reactions and quick reaction bar
-│     │  ├─ typing.js        # Ephemeral typing and voice recording hints
-│     │  ├─ emoji/           # Categorized emoji picker component
-│     │  ├─ stickers/        # Built-in SVG tray, IndexedDB custom sticker store, WebP processor
-│     │  ├─ media/           # Client-side JPEG compression and Opus voice recorder
-│     │  ├─ qr.js            # QR code invite modal
-│     │  ├─ lightbox.js      # Fullscreen photo zoom modal
-│     │  └─ invite.js        # Web Share API and invite link clipboard copy
-│     └─ vendor/qrcode.mjs   # Pure JS QR code generator
-├─ tests/
-│  ├─ helpers.js             # Test runner helpers: ephemeral port server spawner and client factory
-│  ├─ rooms.test.js          # Room creation, joining, capacity, destroy, and IP limits
-│  ├─ messages.test.js       # Ciphertext relay, history integrity, token protection, rate limits
-│  ├─ media.test.js          # Encrypted photos/voice notes, room eviction, and global storage caps
-│  ├─ delete.test.js         # Message deletion authorization, owner/admin checks, history purge
-│  ├─ typing.test.js         # Ephemeral typing relay, throttle checks, no echo, no persistence
-│  └─ security_headers.test.js # Strict CSP, Referrer-Policy, Cache-Control, and static assets
-└─ docs/
-   └─ architecture.md        # Architecture overview and guide to adding new message kinds & socket events
+├─ server/           # Express app, security headers, in-memory store, socket handlers
+├─ public/           # Static frontend files served directly to browser
+│  ├─ assets/        # Built-in SVG sticker assets
+│  ├─ css/           # Modular stylesheets (theme, base, layout, messages, composer, overlays, stickers)
+│  ├─ js/            # Client ES modules (core, messages/kinds, features, pages, theme-init)
+│  └─ vendor/        # Third-party dependencies (qrcode.mjs)
+├─ tests/            # Automated test suite (node:test) covering all protocol contracts
+└─ docs/             # Architecture overview, extension guides, and screenshot assets
 ```
 
 ---
 
-## Getting Started
+## Limits
 
-### Prerequisites
-- Node.js 18+ (tested on Node.js 20, 22)
-
-### Installation
-```bash
-git clone https://github.com/Adarshhspeaks/hush.git
-cd hush
-npm install
-```
-
-### Running Locally
-```bash
-# Start production server on port 3000
-npm start
-
-# Start development server with file watching
-npm run dev
-```
-
-Open `http://localhost:3000` in your browser.
-
-> [!NOTE]
-> Web Crypto requires a secure context (`localhost` or `https`). Accessing the server across a local area network (LAN) IP via unencrypted `http://` will disable Web Crypto in modern browsers.
+| Parameter | Limit | Description |
+|---|---|---|
+| **Message Text** | 1,000 characters | Ciphertext envelope capped at 4,096 chars |
+| **Media File** | ~1.5 MB | Compressed photo (JPEG) or voice note (Opus) |
+| **Custom Sticker** | 100 KB | WebP/PNG square crop, max 60 per browser |
+| **Room Media Cap** | 12 MB | Oldest media dropped first when cap exceeded |
+| **Global Media Cap** | 120 MB | Server memory guard against media exhaustion |
+| **Room Expiry** | 24 hours | Messages and empty rooms vanish after 24h |
+| **Room Capacity** | 50 users | Maximum concurrent socket connections per room |
+| **Rate Limit** | Burst 5, refill 2.5/s | Token bucket per socket (media costs 3, text costs 1) |
 
 ---
 
-## Running Tests
+## Contributing & Audit
 
-Hush includes a characterization test suite using Node's native test runner (`node:test`) and real Web Crypto:
+Hush is kept small and dependency-light so anyone can audit the code:
+- Read [PROTOCOL.md](PROTOCOL.md) and [server/](server/) to verify the server never sees plaintext.
+- Run tests: `npm test`
 
-```bash
-npm test
-```
-
-This verifies:
-- End-to-end encryption roundtrips (text, photos, voice notes, stickers)
-- Room creation, capacity, and IP rate limits
-- Token bucket rate limiting on messages and typing hints
-- Owner-only and admin-only message deletion (`delToken`, `adminToken`)
-- Per-room media eviction and global server media caps
-- Strict CSP and privacy headers
+Issues and pull requests are welcome on GitHub.
 
 ---
 
-## Deployment (Render)
+## License & Author
 
-1. Click the **Deploy to Render** button above or link your GitHub fork to [Render](https://render.com).
-2. **Environment**: Node
-3. **Build Command**: `npm install`
-4. **Start Command**: `npm start`
-5. Render automatically provisions free HTTPS, enabling Web Crypto and microphone permissions on mobile browsers.
-
-### Environment Variables
-Configure these in Render or your `.env` file:
-- `PORT`: Port to listen on (default: `3000`).
-- `ROOM_MEDIA_CAP`: Max media bytes stored per room before oldest media is dropped (default: `12000000` / 12MB).
-- `GLOBAL_MEDIA_CAP`: Max media bytes stored across the whole server (default: `120000000` / 120MB).
-
----
-
-## Features
-
-- **Text & Nicknames**: Client-side encrypted text messages (up to 1000 characters), random animal names with customizable nicknames.
-- **Quoted Replies**: Quote any message with author hue and click-to-jump with pulse highlight animation.
-- **Delete for Everyone**: Securely remove your own messages in real-time across all clients and server memory using secret single-use tokens (`delToken`).
-- **Original Stickers**: 24 vector SVG stickers across Reactions, Love, Funny, and Words packs.
-- **Custom Stickers**: Make-your-own sticker tool with square crop, transparent WebP/PNG compression under 100 KB, stored locally in IndexedDB (max 60, SHA-256 deduplicated).
-- **Photos**: Client-side canvas resizing to JPEG (stripping EXIF/GPS metadata), fullscreen lightbox viewer, and direct download.
-- **Voice Notes**: Browser MediaRecorder API with Opus audio (WebM/MP4/OGG), live recording timer, preview duration, and download link.
-- **Emoji & Reactions**: 6-category emoji picker and instant emoji reaction chips on any message.
-- **Live Hints**: Real-time "typing…" and "recording…" indicators (encrypted, never stored in history).
-- **QR Code Invites**: Built-in QR generator for mobile invites and Web Share API support.
-- **24-Hour Expiration**: In-memory sweeper purges messages older than 24h and deletes idle rooms.
-- **Creator Room Destruction**: Room creator can wipe room memory and disconnect all sockets with one click.
-
----
-
-## Security & Specifications
-
-For comprehensive security audits and protocol implementation details, see:
-- [PROTOCOL.md](PROTOCOL.md) — Socket events, payload shapes, and encryption schemas.
-- [SECURITY.md](SECURITY.md) — Threat model, security boundaries, and honest architectural limitations.
-- [docs/architecture.md](docs/architecture.md) — Architectural overview and extension guides.
-
----
-
-## License
-
-[MIT](LICENSE)
+- **Author**: Adarsh Kumar ([@Adarshhspeaks](https://github.com/Adarshhspeaks))
+- **License**: [MIT](LICENSE)
