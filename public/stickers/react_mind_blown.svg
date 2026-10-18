@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Explosion cloud -->
+    <path d="M64 12 C72 10, 84 16, 88 24 C96 24, 106 32, 104 42 C114 48, 114 62, 106 70 C110 80, 102 92, 90 92 C86 100, 74 104, 64 102 C54 104, 42 100, 38 92 C26 92, 18 80, 22 70 C14 62, 14 48, 24 42 C22 32, 32 24, 40 24 C44 16, 56 10, 64 12 Z" fill="#FFE66D" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M64 16 C71 14, 82 20, 85 27 C92 27, 101 34, 99 43 C108 48, 108 60, 101 67 C104 76, 97 86, 87 86 C83 93, 73 97, 64 95 C55 97, 45 93, 41 86 C31 86, 24 76, 27 67 C20 60, 20 48, 29 43 C27 34, 36 27, 43 27 C46 20, 57 14, 64 16 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="4" stroke-linejoin="round"/>
+    
+    <!-- Face -->
+    <circle cx="64" cy="74" r="34" fill="#FFD84D" stroke="#FFFFFF" stroke-width="6"/>
+    <circle cx="64" cy="74" r="34" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4"/>
+    
+    <!-- Brain/Sparks inside mushroom top -->
+    <path d="M46 36 Q64 24 82 36 Q92 48 84 54 Q64 46 44 54 Q36 48 46 36 Z" fill="#FFE66D" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="48" cy="22" r="3" fill="#FFE66D" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="80" cy="20" r="4" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="64" cy="18" r="3" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="2"/>
+
+    <!-- Wide open shocked eyes -->
+    <ellipse cx="50" cy="70" rx="9" ry="11" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="50" cy="71" r="5" fill="#1B1B3A"/>
+    <circle cx="52" cy="69" r="2" fill="#FFFFFF"/>
+    
+    <ellipse cx="78" cy="70" rx="9" ry="11" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="78" cy="71" r="5" fill="#1B1B3A"/>
+    <circle cx="80" cy="69" r="2" fill="#FFFFFF"/>
+
+    <!-- Open mouth with tongue -->
+    <ellipse cx="64" cy="92" rx="10" ry="12" fill="#1B1B3A"/>
+    <path d="M57 96 Q64 91 71 96 Q64 104 57 96 Z" fill="#FF5C8A"/>
+  </g>
+</svg>

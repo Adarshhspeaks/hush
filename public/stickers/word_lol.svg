@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Pill cloud badge outline -->
+    <path d="M34 26 C16 26 12 42 12 64 C12 86 16 102 34 102 L94 102 C112 102 116 86 116 64 C116 42 112 26 94 26 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M34 26 C16 26 12 42 12 64 C12 86 16 102 34 102 L94 102 C112 102 116 86 116 64 C116 42 112 26 94 26 Z" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- L -->
+    <path d="M28 44 L28 82 L46 82" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M28 44 L28 82 L46 82" fill="none" stroke="#FF5C8A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- O (with laughing closed eyes) -->
+    <circle cx="64" cy="63" r="19" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="4"/>
+    <path d="M54 58 Q64 68 74 58" fill="none" stroke="#1B1B3A" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Crying laugh tears -->
+    <path d="M48 64 C48 60 44 54 44 54 C44 54 40 60 40 64 C40 67 44 69 48 68 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="1.5"/>
+    <path d="M88 64 C88 60 84 54 84 54 C84 54 80 60 80 64 C80 67 84 69 88 68 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="1.5"/>
+
+    <!-- Second L -->
+    <path d="M88 44 L88 82 L106 82" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M88 44 L88 82 L106 82" fill="none" stroke="#FF5C8A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

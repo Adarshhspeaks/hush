@@ -35,6 +35,8 @@ Encryption needs a secure context: `localhost` or `https`. Opening it by LAN IP 
 - Text chat, random nicknames (changeable), online count, history for late joiners (last 200 messages)
 - ↩ Reply-to-message: quote any message with jump-to and highlight animation (encrypted)
 - 🗑 Delete-for-everyone: securely remove your own messages in real-time across all clients and server memory
+- ✨ Stickers: 24 original built-in vector stickers across 4 categories (Reactions, Love, Funny, Words) with keyword search
+- 🎨 Make-Your-Own Stickers: square crop, transparent WebP/PNG under 100 KB, stored locally in IndexedDB (limit 60, SHA-256 deduped), tap to save received stickers
 - 🌙 Dark mode & ☀️ Light mode with instant toggle and OS system preference sync
 - Photos: pick or paste, auto-resized to JPEG (this also strips EXIF/GPS), tap to zoom, download button
 - Voice messages: tap mic, talk, send (max 2 min), play and download
@@ -43,12 +45,15 @@ Encryption needs a secure context: `localhost` or `https`. Opening it by LAN IP 
 - QR code invite and share-sheet invite link
 - 24h auto-expiry, creator can destroy the room
 - Rate limits, strict CSP, nothing written to disk, no logging of message content
+- Full protocol specification available in [PROTOCOL.md](PROTOCOL.md)
 
-Photos, voice notes, nicknames, reactions, replies and typing hints are all encrypted in the browser with the room key.
+Photos, voice notes, stickers, nicknames, reactions, replies and typing hints are all encrypted in the browser with the room key.
 
 ## Media limits
 - One photo or voice note: about 1.5 MB after compression
+- Custom stickers: maximum 100 KB each, up to 60 stored in browser IndexedDB
 - Per room: 12 MB of media, oldest media is dropped first (text stays)
 - Whole server: 120 MB (override with env `ROOM_MEDIA_CAP`, `GLOBAL_MEDIA_CAP` in characters)
 - Photos are always sent as JPEG, so GIFs become still images
 - Voice notes need microphone permission and https (or localhost)
+

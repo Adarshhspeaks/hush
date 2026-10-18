@@ -2,6 +2,7 @@ import { importKey, encrypt, decrypt, encryptBytes, decryptBytes, randomId } fro
 import { randomName, colorFor, hueFor } from './names.js';
 import { compressImage, startRecording, canRecord } from './media.js';
 import { buildPicker, QUICK } from './emoji.js';
+import { ALLOWED_STICKER_IDS, buildStickerTray, saveCustomSticker } from './stickers.js';
 import { initTheme } from './theme.js';
 import qrcode from './vendor/qrcode.mjs';
 
@@ -22,7 +23,7 @@ try {
 function fatal(msg) {
   $('log').textContent = msg;
   $('log').className = 'log fatal';
-  for (const id of ['f', 'recbar', 'emoji', 'typing', 'replyBar']) $(id).hidden = true;
+  for (const id of ['f', 'recbar', 'pickerBox', 'typing', 'replyBar']) $(id).hidden = true;
 }
 
 function flashNotice(txt) {
@@ -213,7 +214,59 @@ async function main() {
       }
 
       let snippet = '';
-      if (data.k === 'img' || data.k === 'voice') {
+      if (data.k === 'sticker') {
+        snippet = 'Sticker';
+        el.className = 'msg sticker-msg' + (data.u === myUid ? ' mine' : '');
+        meta.remove(); // No bubble header for stickers
+
+        if (data.pack === 'builtin') {
+          if (!ALLOWED_STICKER_IDS.has(data.id)) {
+            body.textContent = '🔒 Unrecognized sticker';
+          } else {
+            const img = document.createElement('img');
+            img.className = 'sticker-display';
+            img.src = `/stickers/${data.id}.svg`;
+            img.alt = data.id;
+            img.loading = 'lazy';
+            img.onload = () => stick && toBottom();
+            body.append(img);
+          }
+        } else if (data.pack === 'custom') {
+          const mime = (data.mime === 'image/webp' || data.mime === 'image/png') ? data.mime : '';
+          if (!mime || !m.mct) {
+            body.textContent = '📎 Custom sticker no longer available';
+          } else {
+            const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = 'Decrypting sticker…';
+            body.append(ph);
+            decryptBytes(key, m).then((bytes) => {
+              const blob = new Blob([bytes], { type: mime });
+              const url = URL.createObjectURL(blob);
+              const img = document.createElement('img');
+              img.className = 'sticker-display';
+              img.src = url;
+              img.alt = 'Custom sticker';
+              img.title = 'Tap to save to My Stickers';
+              img.onload = () => stick && toBottom();
+              img.onclick = async () => {
+                try {
+                  await saveCustomSticker(blob, mime);
+                  flashNotice('Sticker saved to My Stickers! ⭐');
+                  stickerTray?.refresh();
+                } catch (err) {
+                  flashNotice(err.message || 'Could not save sticker.');
+                }
+              };
+              ph.replaceWith(img);
+              if (stick) toBottom();
+            }).catch(() => { ph.textContent = '🔒 Could not decrypt sticker'; });
+          }
+        }
+
+        const smeta = document.createElement('div');
+        smeta.className = 'sticker-meta';
+        smeta.textContent = `${data.n.slice(0, 30)} · ${new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        el.append(smeta);
+      } else if (data.k === 'img' || data.k === 'voice') {
         snippet = data.k === 'img' ? '📷 Photo' : '🎤 Voice message';
         if (!m.mct) {
           const ph = document.createElement('div');
@@ -270,6 +323,26 @@ async function main() {
       repBtn.textContent = '↩';
       repBtn.onclick = (e) => { e.stopPropagation(); setReply(m.id, data.n, data.u, snippet); };
       actions.append(repBtn);
+
+      if (data.k === 'sticker' && data.pack === 'custom' && m.mct) {
+        const saveBtn = document.createElement('button');
+        saveBtn.type = 'button'; saveBtn.className = 'act-btn'; saveBtn.title = 'Save to My Stickers'; saveBtn.setAttribute('aria-label', 'Save to My Stickers');
+        saveBtn.textContent = '⭐';
+        saveBtn.onclick = async (e) => {
+          e.stopPropagation();
+          try {
+            const bytes = await decryptBytes(key, m);
+            const mime = (data.mime === 'image/webp' || data.mime === 'image/png') ? data.mime : 'image/webp';
+            const blob = new Blob([bytes], { type: mime });
+            await saveCustomSticker(blob, mime);
+            flashNotice('Saved to My Stickers! ⭐');
+            stickerTray?.refresh();
+          } catch (err) {
+            flashNotice(err.message || 'Could not save sticker.');
+          }
+        };
+        actions.append(saveBtn);
+      }
 
       const canDelete = data.u === myUid || Boolean(adminToken) || Boolean(getDelToken(m.id));
       if (canDelete) {
@@ -407,7 +480,7 @@ async function main() {
     try { rec = await startRecording(); } catch { return alert('Allow microphone access to send voice messages.'); }
     recStart = Date.now();
     $('rtime').textContent = '0:00';
-    $('recbar').hidden = false; $('f').hidden = true; $('emoji').hidden = true;
+    $('recbar').hidden = false; $('f').hidden = true; $('pickerBox').hidden = true;
     hint('rec');
     recTimer = setInterval(() => {
       const s = Math.floor((Date.now() - recStart) / 1000);
@@ -429,15 +502,69 @@ async function main() {
   $('rsend').onclick = () => finishRec(true);
   $('rcancel').onclick = () => finishRec(false);
 
-  // ---------- emoji picker ----------
-  buildPicker($('emoji'), (e) => {
+  // ---------- sending stickers ----------
+  async function sendBuiltinSticker(id) {
+    if (!ALLOWED_STICKER_IDS.has(id)) return;
+    const payload = { n: myName, u: myUid, k: 'sticker', pack: 'builtin', id };
+    if (activeReply) { payload.reply = activeReply; clearReply(); }
+    const packet = await encrypt(key, payload);
+    socket.emit('msg:send', packet, (r) => {
+      if (r?.error) return alert(r.error);
+      if (r?.id && r?.delToken) {
+        saveDelToken(r.id, r.delToken);
+        enableDelete(r.id);
+      }
+    });
+    $('pickerBox').hidden = true;
+  }
+
+  async function sendCustomSticker(blob, mime) {
+    if (blob.size > 100_000) return alert('Sticker must be under 100 KB.');
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    const headObj = { n: myName, u: myUid, k: 'sticker', pack: 'custom', mime };
+    if (activeReply) { headObj.reply = activeReply; clearReply(); }
+    const head = await encrypt(key, headObj);
+    const media = await encryptBytes(key, bytes);
+    socket.emit('msg:send', { ...head, ...media }, (r) => {
+      if (r?.error) return alert(r.error);
+      if (r?.id && r?.delToken) {
+        saveDelToken(r.id, r.delToken);
+        enableDelete(r.id);
+      }
+    });
+    $('pickerBox').hidden = true;
+  }
+
+  // ---------- emoji & sticker picker ----------
+  buildPicker($('emojiView'), (e) => {
     const i = $('text');
     const s = i.selectionStart ?? i.value.length;
     i.setRangeText(e, s, i.selectionEnd ?? s, 'end');
     i.focus();
     i.dispatchEvent(new Event('input'));
   });
-  $('emojiBtn').onclick = () => ($('emoji').hidden = !$('emoji').hidden);
+
+  const stickerTray = buildStickerTray($('stickerView'), {
+    onSendBuiltin: (id) => sendBuiltinSticker(id),
+    onSendCustom: (blob, mime) => sendCustomSticker(blob, mime),
+    onNotice: (txt) => flashNotice(txt),
+  });
+
+  $('tabEmoji').onclick = () => {
+    $('tabEmoji').classList.add('on');
+    $('tabStickers').classList.remove('on');
+    $('emojiView').hidden = false;
+    $('stickerView').hidden = true;
+  };
+  $('tabStickers').onclick = () => {
+    $('tabStickers').classList.add('on');
+    $('tabEmoji').classList.remove('on');
+    $('stickerView').hidden = false;
+    $('emojiView').hidden = true;
+    stickerTray.refresh();
+  };
+
+  $('emojiBtn').onclick = () => ($('pickerBox').hidden = !$('pickerBox').hidden);
 
   // ---------- header buttons, QR, lightbox ----------
   const inviteLink = () => `${location.origin}/r/${roomId}#${keyStr}`;
@@ -464,8 +591,8 @@ async function main() {
         $('lightbox').hidden = $('qrbox').hidden = true;
       } else if (activeReply) {
         clearReply();
-      } else if (!$('emoji').hidden) {
-        $('emoji').hidden = true;
+      } else if (!$('pickerBox').hidden) {
+        $('pickerBox').hidden = true;
       }
     }
   });

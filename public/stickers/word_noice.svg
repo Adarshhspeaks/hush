@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Tilted diamond rectangle badge outline -->
+    <path d="M14 48 L114 24 L114 80 L14 104 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M14 48 L114 24 L114 80 L14 104 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Inner decorative border -->
+    <path d="M20 52 L108 31 L108 74 L20 95 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-dasharray="4,3"/>
+
+    <!-- Bold vector text NOICE! -->
+    <text x="64" y="73" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="25" fill="#1B1B3A" text-anchor="middle" transform="rotate(-13 64 73)" letter-spacing="1">NOICE!</text>
+
+    <!-- Thumbs up mini badge -->
+    <circle cx="106" cy="30" r="14" fill="#FFD84D" stroke="#1B1B3A" stroke-width="3"/>
+    <path d="M102 34 L102 28 C102 25 104 24 106 24 C108 24 108 27 108 29 L108 31 L111 31 C113 31 114 32 113 34 L111 38 C110 39 108 40 106 40 L102 40 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="1.5"/>
+  </g>
+</svg>

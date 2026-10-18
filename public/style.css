@@ -350,26 +350,259 @@ h1 { font-size: 3rem; margin: 8px 0; line-height: 1; }
 .ib:active { transform: translate(2px, 2px); }
 .typing { min-height: 1.3em; padding: 0 14px; font-size: .8rem; font-style: italic; opacity: .8; color: var(--text-muted); }
 
-/* ---- Emoji picker ---- */
-.emoji {
+/* ---- Picker drawer (Emoji & Stickers) ---- */
+.picker-box {
   background: var(--surface);
   border-top: 3px solid var(--border);
-  height: 210px;
+  height: 270px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
-.etabs { display: flex; gap: 4px; padding: 6px; border-bottom: 2px solid var(--border); overflow-x: auto; }
+.picker-nav {
+  display: flex;
+  background: var(--surface-alt);
+  border-bottom: 2px solid var(--border);
+}
+.pnav-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+.pnav-btn.on {
+  color: var(--text);
+  background: var(--surface);
+  border-bottom: 3px solid var(--pink);
+}
+.emoji-view, .sticker-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Emoji tabs & grid */
+.etabs { display: flex; gap: 4px; padding: 6px; border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: thin; }
 .etabs button {
   font-size: 1.2rem;
   background: var(--surface);
   border: 2px solid transparent;
   border-radius: 8px;
   cursor: pointer;
+  padding: 2px 6px;
 }
 .etabs button.on { border-color: var(--border); background: var(--header-bg); }
 .egrid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); padding: 6px; }
 .egrid button { font-size: 1.5rem; background: none; border: 0; cursor: pointer; padding: 4px; border-radius: 8px; }
 .egrid button:hover { background: var(--surface-alt); }
+
+/* Sticker tray styles */
+.st-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 2px solid var(--border);
+  background: var(--surface);
+}
+.st-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+.st-tab {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border: 2px solid var(--border);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.1s ease;
+}
+.st-tab.on {
+  background: var(--lemon);
+  color: #1B1B3A;
+  box-shadow: 2px 2px 0 var(--border);
+}
+.st-search {
+  width: 100%;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.85rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--input-bg);
+  color: var(--text);
+}
+.st-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 10px;
+  padding: 10px;
+  align-content: start;
+}
+.st-item {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.st-item img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.st-item .st-name {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.st-item:hover, .st-item:focus-visible {
+  transform: scale(1.1);
+  border-color: var(--pink);
+  background: var(--surface-alt);
+}
+.st-add-btn {
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  background: var(--surface-alt);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 72px;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.st-add-btn:hover {
+  background: var(--lemon);
+  color: #1B1B3A;
+  transform: scale(1.04);
+}
+.st-add-icon { font-size: 1.4rem; }
+.st-add-txt { font-size: 0.75rem; font-weight: 800; }
+
+.st-custom-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.st-custom-btn {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 4px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease;
+}
+.st-custom-btn img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.st-custom-btn:hover {
+  transform: scale(1.08);
+}
+.st-del-btn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--danger);
+  color: #fff;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.st-custom-item:hover .st-del-btn,
+.st-custom-item:focus-within .st-del-btn {
+  opacity: 1;
+}
+.st-tip, .st-empty {
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 8px;
+  font-style: italic;
+}
+
+/* Sticker chat message display (large ~160px with no bubble background) */
+.msg.sticker-msg {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px !important;
+  display: flex;
+  flex-direction: column;
+}
+.msg.sticker-msg.mine {
+  align-self: flex-end;
+}
+.sticker-display {
+  width: 160px;
+  height: 160px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.16));
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sticker-display:hover {
+  transform: scale(1.05);
+}
+.sticker-meta {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  margin-top: 4px;
+  color: var(--text);
+}
+.msg.sticker-msg.mine .sticker-meta {
+  text-align: right;
+}
 
 /* ---- Voice recording ---- */
 .recbar {

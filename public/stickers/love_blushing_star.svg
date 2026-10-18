@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Star die-cut outline -->
+    <path d="M64 12 L77 44 L112 47 L85 71 L93 106 L64 88 L35 106 L43 71 L16 47 L51 44 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M64 14 L77 44 L112 47 L85 71 L93 104 L64 87 L35 104 L43 71 L16 47 L51 44 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Cute smiling eyes -->
+    <ellipse cx="50" cy="58" rx="4" ry="6" fill="#1B1B3A"/>
+    <circle cx="51" cy="56" r="1.5" fill="#FFFFFF"/>
+    <ellipse cx="78" cy="58" rx="4" ry="6" fill="#1B1B3A"/>
+    <circle cx="79" cy="56" r="1.5" fill="#FFFFFF"/>
+
+    <!-- Blushing pink cheeks -->
+    <ellipse cx="42" cy="66" rx="6" ry="3.5" fill="#FF5C8A"/>
+    <ellipse cx="86" cy="66" rx="6" ry="3.5" fill="#FF5C8A"/>
+
+    <!-- Small sweet mouth -->
+    <path d="M60 66 Q64 71 68 66" fill="none" stroke="#1B1B3A" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Little floating hearts around star -->
+    <path d="M96 28 C92 24 88 20 88 17 C88 14 91 12 93 12 C95 12 96 13 96 14 C97 13 98 12 100 12 C103 12 105 14 105 17 C105 20 101 24 96 28 Z" fill="#FF5C8A" stroke="#FFFFFF" stroke-width="1.5"/>
+    <path d="M26 36 C23 33 20 30 20 28 C20 26 22 24 24 24 C25 24 26 25 26 26 C27 25 28 24 30 24 C32 24 34 26 34 28 C34 30 31 33 26 36 Z" fill="#FF5C8A" stroke="#FFFFFF" stroke-width="1.5"/>
+  </g>
+</svg>

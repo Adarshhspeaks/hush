@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Base face with die-cut outline -->
+    <circle cx="64" cy="64" r="48" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8"/>
+    <circle cx="64" cy="64" r="48" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4"/>
+
+    <!-- Left eye (closed tight in pain/disbelief) -->
+    <path d="M38 56 Q48 50 48 60" fill="none" stroke="#1B1B3A" stroke-width="4" stroke-linecap="round"/>
+    <!-- Left eyebrow -->
+    <path d="M36 46 Q46 42 52 48" fill="none" stroke="#1B1B3A" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Sigh mouth -->
+    <path d="M42 88 Q54 82 68 86" fill="none" stroke="#1B1B3A" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Sweat drop -->
+    <path d="M30 40 C30 36, 26 28, 26 28 C26 28, 22 36, 22 40 C22 44, 25 47, 30 47 C30 47, 30 44, 30 40 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="2.5"/>
+
+    <!-- Slapping Hand on right side -->
+    <!-- Palm and fingers -->
+    <path d="M68 40 Q76 34 84 40 L84 56 Q92 50 98 58 L98 70 Q104 66 108 74 C112 82 104 96 94 102 C84 108 68 106 60 92 C54 82 58 66 64 56 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M68 40 Q76 34 84 40 L84 56 Q92 50 98 58 L98 70 Q104 66 108 74 C112 82 104 96 94 102 C84 108 68 106 60 92 C54 82 58 66 64 56 Z" fill="#FFAA80" stroke="#1B1B3A" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Finger separation lines -->
+    <path d="M82 54 L78 74" stroke="#1B1B3A" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M94 66 L88 82" stroke="#1B1B3A" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Slap impact stars -->
+    <path d="M88 28 L91 35 L98 36 L92 41 L94 48 L88 44 L82 48 L84 41 L78 36 L85 35 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="2"/>
+  </g>
+</svg>

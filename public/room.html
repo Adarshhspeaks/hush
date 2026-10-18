@@ -14,8 +14,14 @@
 </header>
 <p class="banner" id="banner">Encrypted in your browser. Anyone with the full link can read this chat, so only share it with people you trust.</p>
 <div id="log" class="log" aria-live="polite"></div>
-<div id="typing" class="typing" aria-live="polite"></div>
-<div id="emoji" class="emoji" hidden></div>
+<div id="pickerBox" class="picker-box" hidden>
+  <div class="picker-nav">
+    <button type="button" class="pnav-btn on" id="tabEmoji">😊 Emoji</button>
+    <button type="button" class="pnav-btn" id="tabStickers">✨ Stickers</button>
+  </div>
+  <div id="emojiView" class="emoji-view"></div>
+  <div id="stickerView" class="sticker-view" hidden></div>
+</div>
 <div id="replyBar" class="reply-bar" hidden>
   <div class="reply-indicator"></div>
   <div class="reply-details">

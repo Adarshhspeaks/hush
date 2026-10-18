@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Rainbow arch behind badge -->
+    <path d="M20 90 A44 44 0 0 1 108 90" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>
+    <path d="M20 90 A44 44 0 0 1 108 90" fill="none" stroke="#FF5C8A" stroke-width="18" stroke-linecap="round"/>
+    <path d="M24 90 A40 40 0 0 1 104 90" fill="none" stroke="#FFD84D" stroke-width="12" stroke-linecap="round"/>
+    <path d="M28 90 A36 36 0 0 1 100 90" fill="none" stroke="#5EE6B0" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Foreground curved badge banner -->
+    <path d="M12 76 Q64 56 116 76 L112 104 Q64 84 16 104 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M12 76 Q64 56 116 76 L112 104 Q64 84 16 104 Z" fill="#FFE66D" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Text YAAAS! -->
+    <text x="64" y="93" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="23" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="1.5" text-anchor="middle" letter-spacing="1">YAAAS!</text>
+
+    <!-- Sparkles on top -->
+    <polygon points="64,14 67,22 75,25 67,28 64,36 61,28 53,25 61,22" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+    <polygon points="26,38 28,43 33,45 28,47 26,52 24,47 19,45 24,43" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="1.5"/>
+    <polygon points="102,38 104,43 109,45 104,47 102,52 100,47 95,45 100,43" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="1.5"/>
+  </g>
+</svg>
