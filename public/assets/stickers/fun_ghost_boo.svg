@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Ghost body die-cut outline -->
+    <path d="M64 16 C38 16 24 38 24 64 C24 82 28 92 24 104 C30 98 38 98 44 106 C50 98 58 98 64 106 C70 98 78 98 84 106 C90 98 98 98 104 104 C100 92 104 82 104 64 C104 38 90 16 64 16 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    
+    <path d="M64 16 C38 16 24 38 24 64 C24 82 28 92 24 104 C30 98 38 98 44 106 C50 98 58 98 64 106 C70 98 78 98 84 106 C90 98 98 98 104 104 C100 92 104 82 104 64 C104 38 90 16 64 16 Z" fill="#F4F8FD" stroke="#1B1B3A" stroke-width="4" stroke-linejoin="round"/>
+
+    <!-- Tiny waving ghost arms -->
+    <path d="M26 62 Q12 56 18 48 Q26 50 30 56" fill="#F4F8FD" stroke="#1B1B3A" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M102 62 Q116 56 110 48 Q102 50 98 56" fill="#F4F8FD" stroke="#1B1B3A" stroke-width="3.5" stroke-linejoin="round"/>
+
+    <!-- Expressive "BOO!" face -->
+    <ellipse cx="48" cy="52" rx="7" ry="10" fill="#1B1B3A"/>
+    <circle cx="50" cy="49" r="2.5" fill="#FFFFFF"/>
+
+    <ellipse cx="80" cy="52" rx="7" ry="10" fill="#1B1B3A"/>
+    <circle cx="82" cy="49" r="2.5" fill="#FFFFFF"/>
+
+    <!-- Blushing pink cheeks -->
+    <ellipse cx="38" cy="62" rx="6" ry="3.5" fill="#FF5C8A" opacity="0.6"/>
+    <ellipse cx="90" cy="62" rx="6" ry="3.5" fill="#FF5C8A" opacity="0.6"/>
+
+    <!-- Big surprised mouth -->
+    <ellipse cx="64" cy="68" rx="8" ry="12" fill="#1B1B3A"/>
+    <ellipse cx="64" cy="74" rx="5" ry="4" fill="#FF5C8A"/>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Blob creature outline -->
+    <path d="M22 68 C22 36 40 20 64 20 C88 20 106 36 106 68 C106 94 92 108 64 108 C36 108 22 94 22 68 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M22 68 C22 36 40 20 64 20 C88 20 106 36 106 68 C106 94 92 108 64 108 C36 108 22 94 22 68 Z" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Wide curious drama-watching eyes -->
+    <ellipse cx="48" cy="46" rx="9" ry="12" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="50" cy="48" r="6" fill="#1B1B3A"/>
+    <circle cx="52" cy="45" r="2.5" fill="#FFFFFF"/>
+
+    <ellipse cx="80" cy="46" rx="9" ry="12" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="78" cy="48" r="6" fill="#1B1B3A"/>
+    <circle cx="80" cy="45" r="2.5" fill="#FFFFFF"/>
+
+    <!-- Open munching mouth -->
+    <ellipse cx="64" cy="62" rx="6" ry="7" fill="#1B1B3A"/>
+    <ellipse cx="64" cy="65" rx="4" ry="3" fill="#FF5C8A"/>
+
+    <!-- Popcorn bucket outline -->
+    <path d="M44 72 L84 72 L80 114 L48 114 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <!-- Popcorn bucket fill -->
+    <path d="M44 72 L84 72 L80 114 L48 114 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Bucket stripes -->
+    <path d="M52 72 L54 114 M64 72 L64 114 M76 72 L74 114" stroke="#FFFFFF" stroke-width="5"/>
+
+    <!-- Popcorn kernels overflowing -->
+    <circle cx="48" cy="68" r="6" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="60" cy="66" r="7" fill="#FFE66D" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="72" cy="67" r="6.5" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="80" cy="70" r="5" fill="#FFE66D" stroke="#1B1B3A" stroke-width="2"/>
+    <circle cx="65" cy="58" r="5" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+  </g>
+</svg>

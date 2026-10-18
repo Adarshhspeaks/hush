@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Die-cut white background -->
+    <path d="M12 64 C12 36 34 22 52 22 C64 22 66 32 76 32 C86 32 88 22 100 22 C118 22 140 36 140 64 C140 92 118 106 100 106 C88 106 86 96 76 96 C66 96 64 106 52 106 C34 106 12 92 12 64 Z" transform="scale(0.85) translate(12 10)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+
+    <!-- Left eyeball -->
+    <ellipse cx="44" cy="64" rx="26" ry="34" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="4.5"/>
+    <!-- Left iris looking left -->
+    <ellipse cx="32" cy="64" rx="14" ry="18" fill="#1B1B3A"/>
+    <!-- Highlights -->
+    <circle cx="28" cy="58" r="5" fill="#FFFFFF"/>
+    <circle cx="36" cy="70" r="2.5" fill="#FFFFFF"/>
+
+    <!-- Right eyeball -->
+    <ellipse cx="88" cy="64" rx="26" ry="34" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="4.5"/>
+    <!-- Right iris looking left -->
+    <ellipse cx="76" cy="64" rx="14" ry="18" fill="#1B1B3A"/>
+    <!-- Highlights -->
+    <circle cx="72" cy="58" r="5" fill="#FFFFFF"/>
+    <circle cx="80" cy="70" r="2.5" fill="#FFFFFF"/>
+
+    <!-- Playful eyelashes / blush marks -->
+    <line x1="28" y1="24" x2="38" y2="28" stroke="#1B1B3A" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="72" y1="24" x2="82" y2="28" stroke="#1B1B3A" stroke-width="3.5" stroke-linecap="round"/>
+    
+    <path d="M22 102 Q34 106 46 102" stroke="#FF5C8A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M68 102 Q80 106 92 102" stroke="#FF5C8A" stroke-width="4" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

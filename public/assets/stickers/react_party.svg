@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Confetti explosion shapes -->
+    <path d="M72 16 L80 12 L78 22 Z" fill="#FF5C8A" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="94" cy="24" r="5" fill="#5EE6B0" stroke="#FFFFFF" stroke-width="2"/>
+    <rect x="100" y="44" width="8" height="8" rx="2" fill="#FFD84D" stroke="#FFFFFF" stroke-width="2" transform="rotate(25 104 48)"/>
+    <path d="M50 14 Q60 18 56 26" stroke="#FFD84D" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="82" cy="38" r="4" fill="#FF5C8A"/>
+    <rect x="66" y="32" width="7" height="7" rx="2" fill="#5EE6B0" transform="rotate(45 70 36)"/>
+
+    <!-- Party cone with die-cut outline -->
+    <path d="M22 106 L40 50 L92 78 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M24 104 L42 52 L90 78 Z" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4" stroke-linejoin="round"/>
+    
+    <!-- Cone stripes -->
+    <path d="M31 82 L72 67" stroke="#FF5C8A" stroke-width="6" stroke-linecap="round"/>
+    <path d="M26 95 L54 85" stroke="#5EE6B0" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Popping sparkles -->
+    <polygon points="98,16 102,24 110,28 102,32 98,40 94,32 86,28 94,24" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+    <polygon points="106,62 109,68 115,70 109,72 106,78 103,72 97,70 103,68" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="1.5"/>
+    <polygon points="56,6 58,11 63,12 58,14 56,19 54,14 49,12 54,11" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="1.5"/>
+  </g>
+</svg>

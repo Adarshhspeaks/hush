@@ -1,21 +1,38 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hush — private anonymous chat</title><link rel="stylesheet" href="/style.css">
-<script type="module" src="/theme.js"></script></head>
-<body><main class="wrap center">
-<div class="top-bar-landing"><button class="mini theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">🌙</button></div>
-<h1>Hush 🤫</h1>
-<p class="lead">Anonymous chat rooms. No login, no phone number. Messages are encrypted in your browser, so even the server can't read them.</p>
-<button class="btn pink" id="create">Create a private room</button>
-<p class="err" id="err" role="alert"></p>
-<ul class="feat">
-  <li>🔒 End-to-end encrypted (AES-256)</li>
-  <li>📸 Photos you can download, 🎤 voice messages, 😊 emoji & reactions</li>
-  <li>↩ Reply to messages & 🗑 Delete your messages for everyone</li>
-  <li>🌙 Dark mode & ☀️ Light mode support</li>
-  <li>🎭 Random nickname per room</li>
-  <li>⏳ Rooms and messages vanish after 24 hours</li>
-  <li>🔗 Join by link or QR code, share it where you trust people</li>
-</ul>
-<p class="hint">Open source. The server can't read your chats as long as the code stays honest, so check it on GitHub.</p>
-</main>
-<script type="module" src="/landing.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hush — private anonymous chat</title>
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/messages.css">
+  <link rel="stylesheet" href="/css/composer.css">
+  <link rel="stylesheet" href="/css/overlays.css">
+  <link rel="stylesheet" href="/css/stickers.css">
+</head>
+<body>
+  <main class="wrap center">
+    <div class="top-bar-landing">
+      <button class="mini theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+    </div>
+    <h1>Hush 🤫</h1>
+    <p class="lead">Anonymous chat rooms. No login, no phone number. Messages are encrypted in your browser, so even the server can't read them.</p>
+    <button class="btn pink" id="create">Create a private room</button>
+    <p class="err" id="err" role="alert"></p>
+    <ul class="feat">
+      <li>🔒 End-to-end encrypted (AES-256)</li>
+      <li>📸 Photos you can download, 🎤 voice messages, 😊 emoji & reactions</li>
+      <li>↩ Reply to messages & 🗑 Delete your messages for everyone</li>
+      <li>🌙 Dark mode & ☀️ Light mode support</li>
+      <li>🎭 Random nickname per room</li>
+      <li>⏳ Rooms and messages vanish after 24 hours</li>
+      <li>🔗 Join by link or QR code, share it where you trust people</li>
+    </ul>
+    <p class="hint">Open source. The server can't read your chats as long as the code stays honest, so check it on GitHub.</p>
+  </main>
+  <script type="module" src="/js/pages/landing.js"></script>
+</body>
+</html>

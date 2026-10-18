@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Speech bubble outline -->
+    <path d="M20 28 C20 18 30 12 64 12 C98 12 108 18 108 28 L108 72 C108 82 98 88 64 88 C54 88 46 90 32 104 C34 94 34 88 28 88 C20 88 20 80 20 72 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M20 28 C20 18 30 12 64 12 C98 12 108 18 108 28 L108 72 C108 82 98 88 64 88 C54 88 46 90 32 104 C34 94 34 88 28 88 C20 88 20 80 20 72 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Shh face emoji icon on the left -->
+    <circle cx="44" cy="50" r="18" fill="#FFD84D" stroke="#1B1B3A" stroke-width="3"/>
+    <!-- Closed eyes -->
+    <ellipse cx="38" cy="44" rx="2" ry="3" fill="#1B1B3A"/>
+    <ellipse cx="48" cy="44" rx="2" ry="3" fill="#1B1B3A"/>
+    <!-- Shh finger to lip -->
+    <path d="M42 62 L42 48 C42 45 46 45 46 48 L46 62 Z" fill="#FFAA80" stroke="#1B1B3A" stroke-width="2"/>
+
+    <!-- Text HUSH -->
+    <text x="82" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="24" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">HUSH</text>
+    <text x="82" y="58" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="24" fill="none" stroke="#1B1B3A" stroke-width="2" text-anchor="middle" letter-spacing="2">HUSH</text>
+
+    <!-- Key lock icon badge on corner -->
+    <circle cx="98" cy="24" r="10" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="2.5"/>
+    <circle cx="98" cy="22" r="3.5" fill="#1B1B3A"/>
+    <rect x="96" y="24" width="4" height="5" fill="#1B1B3A"/>
+  </g>
+</svg>

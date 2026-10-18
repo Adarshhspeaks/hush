@@ -113,10 +113,10 @@
 - [x] inventory of events, message kinds, limits and features written
 - [x] characterization tests (including the newer events) written and passing on old code
 - [x] server split into server/ modules, tests green
-- [ ] client CSS split into css/ files, visual check light + dark
-- [ ] client JS split into pages/ core/ messages/ features/, registry in place, every kind moved
-- [ ] theme-init.js still a classic head script, no flash
-- [ ] no inline scripts/styles/handlers, CSP clean
+- [x] client CSS split into css/ files, visual check light + dark
+- [x] client JS split into pages/ core/ messages/ features/, registry in place, every kind moved
+- [x] theme-init.js still a classic head script, no flash
+- [x] no inline scripts/styles/handlers, CSP clean
 - [ ] package.json, .env.example, LICENSE, README, PROTOCOL, SECURITY, architecture docs written
 - [ ] lint + format pass, no dead files or unused code
 - [ ] full manual test of ALL features passed in two browser windows + mobile width
@@ -126,31 +126,5 @@
 ---
 
 ## 4. Current State & Exact Next Step
-- **Current Step**: STEP 2 Complete (Server modularized into `server/`, 100% green tests).
-- **Exact Next Step**: STEP 3 — Client refactor:
-  1. Move built-in SVG sticker assets from `public/stickers/` to `public/assets/stickers/` and update paths without breaking.
-  2. Split `public/style.css` into `public/css/`:
-     - `theme.css` (variables only)
-     - `base.css` (reset, typography, buttons, forms, utilities)
-     - `layout.css` (chat page layout, header, banner)
-     - `messages.css` (bubbles, quotes, reactions, tombstones, media)
-     - `composer.css` (composer, emoji/sticker panel, reply bar, recording bar)
-     - `overlays.css` (lightbox, QR modal)
-     - `stickers.css` (sticker tray, custom sticker cards, etc.)
-  3. Split client JavaScript into `public/js/`:
-     - `theme-init.js` (classic script in `<head>` before CSS to prevent dark-mode flash)
-     - `pages/landing.js`
-     - `pages/room.js` (entry only wiring modules)
-     - `core/crypto.js`
-     - `core/socket.js`
-     - `core/identity.js`
-     - `core/storage.js`
-     - `core/dom.js`
-     - `core/names.js`
-     - `messages/registry.js`
-     - `messages/render.js`
-     - `messages/list.js`
-     - `messages/kinds/` (text, img, voice, react, sticker)
-     - `features/` (stickers, emoji, media, reply, reactions, delete, qr, lightbox, etc.)
-  4. Update HTML `<link>` and `<script>` paths. Keep CSP strict.
-  5. Manual verification in two browser windows (light/dark/mobile). Commit.
+- **Current Step**: STEP 3 Complete (Client CSS and JS modularized into target structure with kind registry, zero inline code, strict CSP preserved).
+- **Exact Next Step**: STEP 4 — Update package.json scripts (`start = node server/index.js`, `test = node --test tests/*.test.js tests/test_stickers_and_security.js`), `.env.example`, `LICENSE` (MIT), `README.md`, `PROTOCOL.md`, `SECURITY.md`, and `docs/architecture.md`. Commit.

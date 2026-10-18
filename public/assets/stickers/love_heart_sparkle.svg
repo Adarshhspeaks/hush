@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- White die cut -->
+    <path d="M64 116 C30 92 12 68 12 44 C12 24 28 12 46 12 C54 12 60 16 64 22 C68 16 74 12 82 12 C100 12 116 24 116 44 C116 68 98 92 64 116 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    
+    <!-- Heart fill -->
+    <path d="M64 112 C32 89 16 66 16 44 C16 26 30 16 46 16 C53 16 59 20 64 26 C69 20 75 16 82 16 C98 16 112 26 112 44 C112 66 96 89 64 112 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Shiny gloss ribbon -->
+    <path d="M30 36 C34 26 44 24 52 26 C44 28 36 34 34 44 C32 40 31 38 30 36 Z" fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- Golden Sparkles -->
+    <polygon points="98,22 101,30 109,33 101,36 98,44 95,36 87,33 95,30" fill="#FFD84D" stroke="#1B1B3A" stroke-width="2"/>
+    <polygon points="30,86 32,92 38,94 32,96 30,102 28,96 22,94 28,92" fill="#5EE6B0" stroke="#1B1B3A" stroke-width="2"/>
+    <polygon points="106,68 107,72 111,73 107,74 106,78 105,74 101,73 105,72" fill="#FFD84D" stroke="#1B1B3A" stroke-width="1.5"/>
+  </g>
+</svg>

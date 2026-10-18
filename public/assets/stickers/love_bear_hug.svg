@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- White die cut outline -->
+    <!-- Bear ears -->
+    <circle cx="34" cy="36" r="16" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8"/>
+    <circle cx="94" cy="36" r="16" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8"/>
+    <!-- Head & body outline -->
+    <ellipse cx="64" cy="68" rx="46" ry="46" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8"/>
+
+    <!-- Bear ears actual -->
+    <circle cx="34" cy="36" r="14" fill="#FFAA80" stroke="#1B1B3A" stroke-width="4"/>
+    <circle cx="34" cy="36" r="8" fill="#FF5C8A"/>
+    <circle cx="94" cy="36" r="14" fill="#FFAA80" stroke="#1B1B3A" stroke-width="4"/>
+    <circle cx="94" cy="36" r="8" fill="#FF5C8A"/>
+
+    <!-- Head -->
+    <ellipse cx="64" cy="68" rx="44" ry="42" fill="#FFAA80" stroke="#1B1B3A" stroke-width="4"/>
+
+    <!-- Snout -->
+    <ellipse cx="64" cy="74" rx="18" ry="14" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <ellipse cx="64" cy="69" rx="7" ry="5" fill="#1B1B3A"/>
+    <path d="M64 74 L64 78 M59 81 Q64 85 64 78 Q64 85 69 81" fill="none" stroke="#1B1B3A" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Happy curved eyes -->
+    <path d="M42 56 Q48 50 54 56" fill="none" stroke="#1B1B3A" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M74 56 Q80 50 86 56" fill="none" stroke="#1B1B3A" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Blushing cheeks -->
+    <ellipse cx="36" cy="68" rx="6" ry="4" fill="#FF5C8A" opacity="0.6"/>
+    <ellipse cx="92" cy="68" rx="6" ry="4" fill="#FF5C8A" opacity="0.6"/>
+
+    <!-- Big pink heart held in paws -->
+    <path d="M64 114 C50 102 38 90 38 78 C38 68 46 62 55 62 C59 62 62 64 64 68 C66 64 69 62 73 62 C82 62 90 68 90 78 C90 90 78 102 64 114 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="3"/>
+    
+    <!-- Paws gripping the heart -->
+    <circle cx="42" cy="88" r="8" fill="#FFAA80" stroke="#1B1B3A" stroke-width="3"/>
+    <circle cx="86" cy="88" r="8" fill="#FFAA80" stroke="#1B1B3A" stroke-width="3"/>
+  </g>
+</svg>

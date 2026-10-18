@@ -1,0 +1,148 @@
+/* Composer form, reply preview bar, voice recording bar, and drawer containers */
+.composer {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 3px solid var(--border);
+  background: var(--header-bg);
+  align-items: center;
+}
+
+.composer input {
+  flex: 1;
+  font: inherit;
+  padding: 10px 12px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.ib {
+  font-size: 1.3rem;
+  line-height: 1;
+  background: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  padding: 6px 9px;
+  cursor: pointer;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: transform 0.1s ease;
+}
+
+.ib:active { transform: translate(2px, 2px); }
+
+/* ---- Composer Reply Preview Bar ---- */
+.reply-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--reply-bar-bg);
+  border-top: 3px solid var(--border);
+  position: relative;
+  animation: slideUp 0.18s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.reply-indicator {
+  width: 4px;
+  align-self: stretch;
+  background: hsl(var(--reply-h, 200) 80% 50%);
+  border-radius: 4px;
+}
+
+.reply-details { flex: 1; min-width: 0; }
+.reply-head { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+.reply-snippet {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reply-cancel {
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+/* ---- Voice recording bar ---- */
+.recbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--header-bg);
+  border-top: 3px solid var(--border);
+}
+
+.dot { width: 14px; height: 14px; border-radius: 50%; background: #e00; animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* ---- Emoji & Sticker Drawer Panel ---- */
+.picker-box {
+  background: var(--surface);
+  border-top: 3px solid var(--border);
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.picker-nav {
+  display: flex;
+  background: var(--surface-alt);
+  border-bottom: 2px solid var(--border);
+}
+
+.pnav-btn {
+  flex: 1;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.9rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.pnav-btn.on {
+  color: var(--text);
+  background: var(--surface);
+  border-bottom: 3px solid var(--pink);
+}
+
+.emoji-view, .sticker-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Emoji tabs & grid */
+.etabs { display: flex; gap: 4px; padding: 6px; border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: thin; }
+.etabs button {
+  font-size: 1.2rem;
+  background: var(--surface);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.etabs button.on { border-color: var(--border); background: var(--header-bg); }
+.egrid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); padding: 6px; }
+.egrid button { font-size: 1.5rem; background: none; border: 0; cursor: pointer; padding: 4px; border-radius: 8px; }
+.egrid button:hover { background: var(--surface-alt); }

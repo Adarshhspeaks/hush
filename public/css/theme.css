@@ -1,0 +1,44 @@
+/* Hush Theme Variables: light and dark mode tokens */
+:root {
+  --sky: #DCEBFF;
+  --ink: #1B1B3A;
+  --pink: #FF5C8A;
+  --lemon: #FFD84D;
+  --mint: #5EE6B0;
+  --bg: var(--sky);
+  --surface: #FFFFFF;
+  --surface-alt: #F4F8FD;
+  --border: var(--ink);
+  --shadow: 3px 3px 0 var(--border);
+  --btn-shadow: 4px 4px 0 var(--border);
+  --btn-active: 1px 1px 0 var(--border);
+  --danger: #b00020;
+  --header-bg: var(--lemon);
+  --banner-bg: #FFFFFF;
+  --input-bg: #FFFFFF;
+  --text: var(--ink);
+  --text-muted: rgba(27, 27, 58, 0.72);
+  --reply-bar-bg: #FFF4C2;
+}
+
+[data-theme="dark"] {
+  --sky: #0F1420;
+  --ink: #F0F4FC;
+  --pink: #FF5C8A;
+  --lemon: #FAD02C;
+  --mint: #4AE4A7;
+  --bg: #0B0E17;
+  --surface: #151B28;
+  --surface-alt: #1D2436;
+  --border: #3B465C;
+  --shadow: 3px 3px 0 #04060A;
+  --btn-shadow: 4px 4px 0 #04060A;
+  --btn-active: 1px 1px 0 #04060A;
+  --danger: #FF5A79;
+  --header-bg: #182030;
+  --banner-bg: #131824;
+  --input-bg: #0F131D;
+  --text: #F0F4FC;
+  --text-muted: #8E9BAE;
+  --reply-bar-bg: #20293D;
+}

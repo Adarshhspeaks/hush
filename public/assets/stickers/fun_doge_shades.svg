@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Dog head outline -->
+    <path d="M22 48 C16 32 30 22 42 36 C52 26 76 26 86 36 C98 22 112 32 106 48 C116 66 112 88 100 102 C88 116 40 116 28 102 C16 88 12 66 22 48 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    
+    <path d="M22 48 C16 32 30 22 42 36 C52 26 76 26 86 36 C98 22 112 32 106 48 C116 66 112 88 100 102 C88 116 40 116 28 102 C16 88 12 66 22 48 Z" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4" stroke-linejoin="round"/>
+
+    <!-- Floppy ears inside -->
+    <path d="M26 44 C22 36 28 30 36 38 C32 50 28 58 26 44 Z" fill="#FFAA80"/>
+    <path d="M102 44 C106 36 100 30 92 38 C96 50 100 58 102 44 Z" fill="#FFAA80"/>
+
+    <!-- Pixel "Deal With It" sunglasses -->
+    <rect x="26" y="52" width="34" height="20" fill="#1B1B3A" stroke="#FFFFFF" stroke-width="2"/>
+    <rect x="68" y="52" width="34" height="20" fill="#1B1B3A" stroke="#FFFFFF" stroke-width="2"/>
+    <rect x="58" y="54" width="12" height="6" fill="#1B1B3A"/>
+    <!-- Pixel white shine -->
+    <rect x="30" y="56" width="6" height="6" fill="#FFFFFF"/>
+    <rect x="36" y="62" width="6" height="6" fill="#FFFFFF"/>
+    <rect x="72" y="56" width="6" height="6" fill="#FFFFFF"/>
+    <rect x="78" y="62" width="6" height="6" fill="#FFFFFF"/>
+
+    <!-- Snout & tongue -->
+    <ellipse cx="64" cy="84" rx="14" ry="10" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="3"/>
+    <ellipse cx="64" cy="79" rx="6" ry="4" fill="#1B1B3A"/>
+    <!-- Tongue hanging out -->
+    <path d="M60 88 C60 98 68 98 68 88 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="2.5"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Shackle outline -->
+    <path d="M42 54 L42 34 C42 20 52 10 64 10 C76 10 86 20 86 34 L86 54" fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round"/>
+    <path d="M42 54 L42 34 C42 20 52 10 64 10 C76 10 86 20 86 34 L86 54" fill="none" stroke="#1B1B3A" stroke-width="12" stroke-linecap="round"/>
+    <path d="M42 54 L42 34 C42 20 52 10 64 10 C76 10 86 20 86 34 L86 54" fill="none" stroke="#5EE6B0" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Heart padlock body outline -->
+    <path d="M64 118 C34 94 18 72 18 52 C18 36 30 26 44 26 C52 26 59 30 64 36 C69 30 76 26 84 26 C98 26 110 36 110 52 C110 72 94 94 64 118 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M64 114 C36 91 22 70 22 52 C22 38 32 30 44 30 C51 30 57 34 64 40 C71 34 77 30 84 30 C96 30 106 38 106 52 C106 70 92 91 64 114 Z" fill="#FFD84D" stroke="#1B1B3A" stroke-width="4.5" stroke-linejoin="round"/>
+
+    <!-- Inner decorative heart line -->
+    <path d="M64 102 C42 84 32 68 32 54 C32 44 38 38 46 38 C51 38 56 41 64 48 C72 41 77 38 82 38 C90 38 96 44 96 54 C96 68 86 84 64 102 Z" fill="none" stroke="#FFE66D" stroke-width="3"/>
+
+    <!-- Keyhole -->
+    <circle cx="64" cy="62" r="7" fill="#1B1B3A"/>
+    <polygon points="61,64 67,64 69,78 59,78" fill="#1B1B3A"/>
+
+    <!-- Sparkle on corner -->
+    <polygon points="96,40 98,45 103,46 98,48 96,53 94,48 89,46 94,45" fill="#FFFFFF" stroke="#1B1B3A" stroke-width="1.5"/>
+  </g>
+</svg>

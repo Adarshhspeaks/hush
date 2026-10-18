@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="1" flood-color="#1B1B3A" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- White die-cut outline -->
+    <path d="M64 8 C72 26 88 32 94 48 C99 60 106 72 102 88 C96 110 76 120 64 120 C52 120 32 110 26 88 C22 72 29 60 34 48 C40 32 56 26 64 8 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round"/>
+    
+    <!-- Outer orange/red flame -->
+    <path d="M64 12 C71 28 86 34 91 49 C96 60 102 71 98 86 C93 106 74 116 64 116 C54 116 35 106 30 86 C26 71 32 60 37 49 C42 34 57 28 64 12 Z" fill="#FF5C8A" stroke="#1B1B3A" stroke-width="4" stroke-linejoin="round"/>
+    
+    <!-- Mid yellow flame -->
+    <path d="M64 36 C70 48 80 54 82 66 C85 76 80 90 74 98 C68 104 60 106 54 104 C62 96 66 86 64 78 C62 70 54 66 56 54 C58 46 61 40 64 36 Z" fill="#FFD84D" stroke="#1B1B3A" stroke-width="3"/>
+    
+    <!-- Sunglasses -->
+    <path d="M38 68 L60 68 L56 82 L42 82 Z" fill="#1B1B3A"/>
+    <path d="M68 68 L90 68 L86 82 L72 82 Z" fill="#1B1B3A"/>
+    <rect x="58" y="70" width="12" height="4" fill="#1B1B3A"/>
+    <!-- Sunglasses shine -->
+    <line x1="42" y1="71" x2="48" y2="79" stroke="#5EE6B0" stroke-width="2"/>
+    <line x1="72" y1="71" x2="78" y2="79" stroke="#5EE6B0" stroke-width="2"/>
+
+    <!-- Smirk -->
+    <path d="M56 94 Q64 102 72 94" fill="none" stroke="#1B1B3A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
