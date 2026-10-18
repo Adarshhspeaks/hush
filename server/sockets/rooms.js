@@ -42,8 +42,8 @@ export function registerRoomHandlers(socket, io, context) {
     room.lastActive = Date.now();
     io.to(id).emit('presence', room.members.size);
 
-    const history = room.msgs.map(({ id: mid, iv, ct, ts, miv, mct, gone }) => ({
-      id: mid,
+    const history = room.msgs.map(({ id, iv, ct, ts, miv, mct, gone }) => ({
+      id,
       iv,
       ct,
       ts,
