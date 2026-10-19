@@ -14,6 +14,7 @@ import { compressImage, canRecord, startRecording } from '../features/media/inde
 import { setupQrModal } from '../features/qr.js';
 import { setupLightbox } from '../features/lightbox.js';
 import { setupInvite } from '../features/invite.js';
+import { setupVoiceCall } from '../features/call.js';
 import { createMessageList } from '../messages/list.js';
 
 // Register kind modules into the registry
@@ -61,6 +62,12 @@ async function main() {
   setupQrModal(inviteLink);
   setupLightbox();
   setupInvite(inviteLink);
+  setupVoiceCall({
+    socket,
+    key,
+    myUid: idt.myUid,
+    getMyName: idt.getMyName,
+  });
 
   const typingController = setupTyping({
     socket,

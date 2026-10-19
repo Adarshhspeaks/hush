@@ -3,6 +3,7 @@ import { TokenBucket } from '../utils/rateLimit.js';
 import { registerRoomHandlers } from './rooms.js';
 import { registerMessageHandlers } from './messages.js';
 import { registerTypingHandlers } from './typing.js';
+import { registerCallHandlers } from './call.js';
 
 export function registerSocketHandlers(io) {
   io.on('connection', (socket) => {
@@ -14,5 +15,6 @@ export function registerSocketHandlers(io) {
     registerRoomHandlers(socket, io, context);
     registerMessageHandlers(socket, io, context);
     registerTypingHandlers(socket, () => context.roomId);
+    registerCallHandlers(socket, () => context.roomId);
   });
 }

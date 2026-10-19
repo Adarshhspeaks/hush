@@ -18,12 +18,27 @@
     <div><b>🔒 Hush</b> <span id="count" class="pill">…</span></div>
     <div class="actions">
       <button class="mini" id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+      <button class="mini" id="callBtn" type="button" aria-label="Start voice call">📞 Call</button>
       <button class="mini" id="qr">QR</button>
       <button class="mini" id="invite">Copy invite</button>
       <button class="mini" id="rename">Rename</button>
       <button class="mini danger" id="destroy" hidden>Destroy</button>
     </div>
   </header>
+  <div id="callBar" class="call-bar" hidden>
+    <div class="call-pulse-dot"></div>
+    <span id="callStatus" class="call-status">Connecting call…</span>
+    <span id="callDur" class="call-dur">0:00</span>
+    <button type="button" class="mini" id="callMuteBtn" aria-label="Mute microphone">🎤</button>
+    <button type="button" class="mini danger" id="callEndBtn" aria-label="End call">End ✕</button>
+  </div>
+  <div id="incomingCallBox" class="incoming-call-box" hidden>
+    <span id="incomingCaller">Someone started a voice call…</span>
+    <div class="incoming-call-actions">
+      <button type="button" class="btn small" id="callDeclineBtn">Dismiss</button>
+      <button type="button" class="btn mint small" id="callAcceptBtn">📞 Join Call</button>
+    </div>
+  </div>
   <p class="banner" id="banner">Encrypted in your browser. Anyone with the full link can read this chat, so only share it with people you trust.</p>
   <div id="log" class="log" aria-live="polite"></div>
   <div id="pickerBox" class="picker-box" hidden>
