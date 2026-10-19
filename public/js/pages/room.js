@@ -22,6 +22,7 @@ import '../messages/kinds/image.js';
 import '../messages/kinds/voice.js';
 import '../messages/kinds/sticker.js';
 import '../messages/kinds/file.js';
+import '../messages/kinds/poll.js';
 
 const roomId = location.pathname.split('/').pop();
 const MAX_MEDIA = 1_500_000; // bytes, matches server limit
@@ -350,15 +351,100 @@ async function main() {
     };
   }
 
+  // Poll creation modal
+  const pollBtn = $('pollBtn');
+  const pollModal = $('pollModal');
+  const pollCancel = $('pollCancel');
+  const pollSubmit = $('pollSubmit');
+  const addPollOptBtn = $('addPollOptBtn');
+  const pollOpts = $('pollOpts');
+  const pollQ = $('pollQ');
+
+  if (pollBtn && pollModal) {
+    pollBtn.onclick = () => {
+      pollModal.hidden = false;
+      if (pollQ) pollQ.focus();
+    };
+
+    if (pollCancel) {
+      pollCancel.onclick = () => {
+        pollModal.hidden = true;
+      };
+    }
+
+    pollModal.onclick = (e) => {
+      if (e.target === pollModal) pollModal.hidden = true;
+    };
+
+    if (addPollOptBtn && pollOpts) {
+      addPollOptBtn.onclick = () => {
+        const count = pollOpts.querySelectorAll('.poll-opt-in').length;
+        if (count >= 5) return alert('Maximum 5 options allowed.');
+        const input = document.createElement('input');
+        input.className = 'poll-in poll-opt-in';
+        input.type = 'text';
+        input.maxLength = 60;
+        input.placeholder = `Option ${count + 1}`;
+        input.autocomplete = 'off';
+        pollOpts.appendChild(input);
+        input.focus();
+      };
+    }
+
+    if (pollSubmit) {
+      pollSubmit.onclick = async () => {
+        const q = (pollQ?.value || '').trim();
+        if (!q) return alert('Please enter a question for the poll.');
+
+        const optInputs = [...pollOpts.querySelectorAll('.poll-opt-in')];
+        const cleanOpts = optInputs.map((i) => i.value.trim()).filter(Boolean);
+        if (cleanOpts.length < 2) {
+          return alert('Please enter at least 2 options.');
+        }
+
+        const pollId = Math.random().toString(36).slice(2, 10);
+        const payload = {
+          n: idt.getMyName(),
+          u: idt.myUid,
+          k: 'poll',
+          pollId,
+          q,
+          opts: cleanOpts,
+        };
+
+        const packet = await encrypt(key, payload);
+        socket.emit('msg:send', packet, (r) => {
+          if (r?.error) return alert(r.error);
+          if (r?.id && r?.delToken) {
+            saveDelToken(roomId, r.id, r.delToken);
+            enableDelete(r.id, msgList.refs, socket, (id) => getDelToken(roomId, id), idt.adminToken);
+          }
+        });
+
+        // Reset form & close
+        if (pollQ) pollQ.value = '';
+        if (pollOpts) {
+          pollOpts.innerHTML = `
+            <input class="poll-in poll-opt-in" type="text" maxlength="60" placeholder="Option 1" autocomplete="off">
+            <input class="poll-in poll-opt-in" type="text" maxlength="60" placeholder="Option 2" autocomplete="off">
+          `;
+        }
+        pollModal.hidden = true;
+      };
+    }
+  }
+
   // Keyboard shortcut: Escape closes modals/drawers/reply
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       const lb = $('lightbox');
       const qb = $('qrbox');
       const pb = $('pickerBox');
-      if ((lb && !lb.hidden) || (qb && !qb.hidden)) {
+      const pm = $('pollModal');
+      if ((lb && !lb.hidden) || (qb && !qb.hidden) || (pm && !pm.hidden)) {
         if (lb) lb.hidden = true;
         if (qb) qb.hidden = true;
+        if (pm) pm.hidden = true;
       } else if (getActiveReply()) {
         clearReply();
       } else if (pb && !pb.hidden) {

@@ -50,6 +50,7 @@
   <form id="f" class="composer" autocomplete="off">
     <button type="button" class="ib" id="emojiBtn" aria-label="Emoji">😊</button>
     <button type="button" class="ib" id="attach" aria-label="Attach file or photo">📎</button>
+    <button type="button" class="ib" id="pollBtn" aria-label="Create poll" title="Create poll">📊</button>
     <input type="file" id="file" multiple hidden>
     <input id="text" maxlength="1000" placeholder="Message" aria-label="Message">
     <button type="button" class="ib" id="mic" aria-label="Record voice message">🎤</button>
@@ -69,6 +70,26 @@
       <img id="qrimg" alt="QR code for the invite link" width="240" height="240">
       <p class="hint">This QR contains the encryption key. Only show it to people you want in the room.</p>
       <button class="btn small" id="qrclose" type="button">Close</button>
+    </div>
+  </div>
+  <div id="pollModal" class="overlay" hidden>
+    <div class="card pollcard">
+      <b>Create an anonymous poll 📊</b>
+      <p class="hint">Questions and options are end-to-end encrypted with the room key.</p>
+      <div class="poll-form">
+        <label class="poll-lbl" for="pollQ">Question</label>
+        <input id="pollQ" class="poll-in" type="text" maxlength="120" placeholder="Ask a question…" autocomplete="off">
+        <label class="poll-lbl">Options (2 to 5)</label>
+        <div id="pollOpts" class="poll-opts-group">
+          <input class="poll-in poll-opt-in" type="text" maxlength="60" placeholder="Option 1" autocomplete="off">
+          <input class="poll-in poll-opt-in" type="text" maxlength="60" placeholder="Option 2" autocomplete="off">
+        </div>
+        <button type="button" class="mini" id="addPollOptBtn">+ Add option</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn small" id="pollCancel" type="button">Cancel</button>
+        <button class="btn pink small" id="pollSubmit" type="button">Create poll</button>
+      </div>
     </div>
   </div>
   <script type="module" src="/js/pages/room.js"></script>

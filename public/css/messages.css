@@ -401,6 +401,133 @@
   box-shadow: 0 0 0;
 }
 
+/* ---- Encrypted Anonymous Polls ---- */
+.poll-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-width: 260px;
+  max-width: 340px;
+  box-shadow: 2px 2px 0 var(--border);
+  margin-top: 4px;
+}
+
+[data-theme="dark"] .poll-card {
+  background: var(--surface-alt);
+}
+
+.poll-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.poll-question {
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.poll-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: var(--lemon);
+  color: #1B1B3A;
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.poll-opt {
+  position: relative;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  box-shadow: 1px 1px 0 var(--border);
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+[data-theme="dark"] .poll-opt {
+  background: #151B28;
+}
+
+.poll-opt:hover {
+  filter: brightness(1.05);
+}
+
+.poll-opt:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0;
+}
+
+.poll-opt.voted {
+  border-color: var(--pink);
+  box-shadow: 1px 1px 0 var(--pink);
+}
+
+.poll-opt-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(255, 92, 138, 0.22);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="dark"] .poll-opt-bar {
+  background: rgba(255, 92, 138, 0.32);
+}
+
+.poll-opt-label {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  word-break: break-word;
+}
+
+.poll-opt-pct {
+  position: relative;
+  z-index: 2;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.poll-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
 
 /* ---- Reactions & Quick Picker ---- */
 .reacts { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }

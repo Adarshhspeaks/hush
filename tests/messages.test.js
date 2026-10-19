@@ -118,4 +118,46 @@ describe('Message Relay, Encryption & Security', () => {
     c.disconnect();
     await srv.stop();
   });
+
+  test('encrypted anonymous poll creation and live voting round-trip', async () => {
+    const pollId = 'poll_test_1';
+    const pollPacket = await encrypt(keyA, {
+      n: 'Alice',
+      u: 'u1',
+      k: 'poll',
+      pollId,
+      q: 'Favorite encrypted chat feature?',
+      opts: ['E2EE', 'Disappearing', 'Polls'],
+    });
+
+    const pollRecvPromise = new Promise((resolve) => clientB.once('msg', resolve));
+    const pollAck = await sendMessage(clientA, pollPacket);
+    assert.strictEqual(pollAck.ok, true);
+
+    const receivedPollMsg = await pollRecvPromise;
+    const decryptedPoll = await decrypt(keyB, receivedPollMsg);
+    assert.strictEqual(decryptedPoll.k, 'poll');
+    assert.strictEqual(decryptedPoll.q, 'Favorite encrypted chat feature?');
+    assert.strictEqual(decryptedPoll.opts.length, 3);
+
+    // Client B casts encrypted vote for option 2 ('Polls')
+    const votePacket = await encrypt(keyB, {
+      n: 'Bob',
+      u: 'u2',
+      k: 'vote',
+      pollId,
+      optIdx: 2,
+    });
+
+    const voteRecvPromise = new Promise((resolve) => clientA.once('msg', resolve));
+    const voteAck = await sendMessage(clientB, votePacket);
+    assert.strictEqual(voteAck.ok, true);
+
+    const receivedVoteMsg = await voteRecvPromise;
+    const decryptedVote = await decrypt(keyA, receivedVoteMsg);
+    assert.strictEqual(decryptedVote.k, 'vote');
+    assert.strictEqual(decryptedVote.pollId, pollId);
+    assert.strictEqual(decryptedVote.optIdx, 2);
+    assert.strictEqual(decryptedVote.u, 'u2');
+  });
 });

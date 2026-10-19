@@ -2,6 +2,7 @@
 import { decrypt } from '../core/crypto.js';
 import { atBottom, toBottom } from '../core/dom.js';
 import { renderReacts } from '../features/reactions.js';
+import { registerVote } from '../features/polls.js';
 import { renderMessageBubble } from './render.js';
 
 export function createMessageList({
@@ -39,6 +40,14 @@ export function createMessageList({
         }
         reacts.set(data.t, map);
         renderReacts(data.t, refs, reacts);
+      }
+      return;
+    }
+
+    // Poll votes are encrypted messages updating an existing poll
+    if (data && data.k === 'vote') {
+      if (typeof data.pollId === 'string' && typeof data.optIdx === 'number') {
+        registerVote(data.pollId, data.u, data.optIdx);
       }
       return;
     }
