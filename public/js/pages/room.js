@@ -23,6 +23,7 @@ import '../messages/kinds/voice.js';
 import '../messages/kinds/sticker.js';
 import '../messages/kinds/file.js';
 import '../messages/kinds/poll.js';
+import '../messages/kinds/game.js';
 
 const roomId = location.pathname.split('/').pop();
 const MAX_MEDIA = 1_500_000; // bytes, matches server limit
@@ -432,6 +433,35 @@ async function main() {
         pollModal.hidden = true;
       };
     }
+  }
+
+  // Turn-based Mini Games (Tic-Tac-Toe challenge)
+  const gameBtn = $('gameBtn');
+  if (gameBtn) {
+    gameBtn.onclick = async () => {
+      const gameId = Math.random().toString(36).slice(2, 10);
+      const payload = {
+        n: idt.getMyName(),
+        u: idt.myUid,
+        k: 'game',
+        gameType: 'ttt',
+        gameId,
+        board: Array(9).fill(null),
+        turn: 'X',
+        playerX: { uid: idt.myUid, name: idt.getMyName() },
+        playerO: null,
+        winner: null,
+      };
+
+      const packet = await encrypt(key, payload);
+      socket.emit('msg:send', packet, (r) => {
+        if (r?.error) return alert(r.error);
+        if (r?.id && r?.delToken) {
+          saveDelToken(roomId, r.id, r.delToken);
+          enableDelete(r.id, msgList.refs, socket, (id) => getDelToken(roomId, id), idt.adminToken);
+        }
+      });
+    };
   }
 
   // Keyboard shortcut: Escape closes modals/drawers/reply

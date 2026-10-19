@@ -160,4 +160,75 @@ describe('Message Relay, Encryption & Security', () => {
     assert.strictEqual(decryptedVote.optIdx, 2);
     assert.strictEqual(decryptedVote.u, 'u2');
   });
+
+  test('turn-based mini game (Tic-Tac-Toe) challenge, join, and move round-trip', async () => {
+    const gameId = 'ttt_game_1';
+    const challengePacket = await encrypt(keyA, {
+      n: 'Alice',
+      u: 'u1',
+      k: 'game',
+      gameType: 'ttt',
+      gameId,
+      board: Array(9).fill(null),
+      turn: 'X',
+      playerX: { uid: 'u1', name: 'Alice' },
+      playerO: null,
+      winner: null,
+    });
+
+    const challengeRecvPromise = new Promise((resolve) => clientB.once('msg', resolve));
+    const challengeAck = await sendMessage(clientA, challengePacket);
+    assert.strictEqual(challengeAck.ok, true);
+
+    const receivedChallenge = await challengeRecvPromise;
+    const decryptedGame = await decrypt(keyB, receivedChallenge);
+    assert.strictEqual(decryptedGame.k, 'game');
+    assert.strictEqual(decryptedGame.gameType, 'ttt');
+    assert.strictEqual(decryptedGame.gameId, gameId);
+    assert.strictEqual(decryptedGame.playerX.name, 'Alice');
+
+    // Bob joins as Player O
+    const joinPacket = await encrypt(keyB, {
+      n: 'Bob',
+      u: 'u2',
+      k: 'game_move',
+      gameId,
+      action: 'join',
+    });
+
+    const joinRecvPromise = new Promise((resolve) => clientA.once('msg', resolve));
+    const joinAck = await sendMessage(clientB, joinPacket);
+    assert.strictEqual(joinAck.ok, true);
+
+    const receivedJoin = await joinRecvPromise;
+    const decryptedJoin = await decrypt(keyA, receivedJoin);
+    assert.strictEqual(decryptedJoin.k, 'game_move');
+    assert.strictEqual(decryptedJoin.action, 'join');
+    assert.strictEqual(decryptedJoin.u, 'u2');
+
+    // Alice makes first move at index 4 (center)
+    const movePacket = await encrypt(keyA, {
+      n: 'Alice',
+      u: 'u1',
+      k: 'game_move',
+      gameId,
+      action: 'move',
+      idx: 4,
+      symbol: 'X',
+      nextTurn: 'O',
+    });
+
+    const moveRecvPromise = new Promise((resolve) => clientB.once('msg', resolve));
+    const moveAck = await sendMessage(clientA, movePacket);
+    assert.strictEqual(moveAck.ok, true);
+
+    const receivedMove = await moveRecvPromise;
+    const decryptedMove = await decrypt(keyB, receivedMove);
+    assert.strictEqual(decryptedMove.k, 'game_move');
+    assert.strictEqual(decryptedMove.action, 'move');
+    assert.strictEqual(decryptedMove.idx, 4);
+    assert.strictEqual(decryptedMove.symbol, 'X');
+    assert.strictEqual(decryptedMove.nextTurn, 'O');
+  });
 });
+

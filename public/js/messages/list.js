@@ -3,6 +3,7 @@ import { decrypt } from '../core/crypto.js';
 import { atBottom, toBottom } from '../core/dom.js';
 import { renderReacts } from '../features/reactions.js';
 import { registerVote } from '../features/polls.js';
+import { applyGameAction } from '../features/games.js';
 import { renderMessageBubble } from './render.js';
 
 export function createMessageList({
@@ -48,6 +49,14 @@ export function createMessageList({
     if (data && data.k === 'vote') {
       if (typeof data.pollId === 'string' && typeof data.optIdx === 'number') {
         registerVote(data.pollId, data.u, data.optIdx);
+      }
+      return;
+    }
+
+    // Mini-game moves/actions are encrypted messages updating a game
+    if (data && data.k === 'game_move') {
+      if (typeof data.gameId === 'string') {
+        applyGameAction(data.gameId, data);
       }
       return;
     }
