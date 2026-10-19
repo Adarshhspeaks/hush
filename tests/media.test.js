@@ -147,4 +147,48 @@ describe('Media Transmission & Storage Caps', () => {
     client.disconnect();
     await server.stop();
   });
+
+  test('generic file attachment (PDF/doc) round-trip with encrypted metadata and bytes', async () => {
+    const server = await startServer();
+    const clientA = await createClient(server.url);
+    const clientB = await createClient(server.url);
+
+    const keyStr = await newKeyString();
+    const keyA = await importKey(keyStr);
+    const keyB = await importKey(keyStr);
+
+    const { id: roomId } = await createRoom(clientA);
+    await joinRoom(clientA, roomId);
+    await joinRoom(clientB, roomId);
+
+    // Simulate encrypted PDF document
+    const dummyPdfBytes = new Uint8Array([0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x34]);
+    const fileHeader = await encrypt(keyA, {
+      n: 'Alice',
+      u: 'u1',
+      k: 'file',
+      fileName: 'confidential_notes.pdf',
+      fileSize: 8,
+      mime: 'application/pdf',
+    });
+    const fileMedia = await encryptBytes(keyA, dummyPdfBytes);
+
+    const recvPromise = new Promise((resolve) => clientB.once('msg', resolve));
+    const sendAck = await sendMessage(clientA, { ...fileHeader, ...fileMedia });
+    assert.strictEqual(sendAck.ok, true);
+
+    const received = await recvPromise;
+    const decryptedHeader = await decrypt(keyB, received);
+    const decryptedBytes = await decryptBytes(keyB, received);
+
+    assert.strictEqual(decryptedHeader.k, 'file');
+    assert.strictEqual(decryptedHeader.fileName, 'confidential_notes.pdf');
+    assert.strictEqual(decryptedHeader.mime, 'application/pdf');
+    assert.deepStrictEqual(decryptedBytes, dummyPdfBytes);
+
+    clientA.disconnect();
+    clientB.disconnect();
+    await server.stop();
+  });
 });
+

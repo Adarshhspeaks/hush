@@ -21,6 +21,7 @@ import '../messages/kinds/text.js';
 import '../messages/kinds/image.js';
 import '../messages/kinds/voice.js';
 import '../messages/kinds/sticker.js';
+import '../messages/kinds/file.js';
 
 const roomId = location.pathname.split('/').pop();
 const MAX_MEDIA = 1_500_000; // bytes, matches server limit
@@ -162,7 +163,7 @@ async function main() {
     });
   }
 
-  // Photos
+  // Photos & File attachments
   async function sendImageFile(file) {
     if (!file.type.startsWith('image/')) return alert('Only images can be sent.');
     try {
@@ -173,13 +174,32 @@ async function main() {
     }
   }
 
+  async function sendGenericFile(file) {
+    if (file.size > MAX_MEDIA) {
+      return alert(`That file is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Max limit is 1.5 MB.`);
+    }
+    await sendMedia('file', file, {
+      fileName: file.name,
+      fileSize: file.size,
+      mime: file.type || 'application/octet-stream',
+    });
+  }
+
+  async function handleFile(file) {
+    if (file.type && file.type.startsWith('image/')) {
+      await sendImageFile(file);
+    } else {
+      await sendGenericFile(file);
+    }
+  }
+
   const attachBtn = $('attach');
   const fileInput = $('file');
   if (attachBtn && fileInput) {
     attachBtn.onclick = () => fileInput.click();
     fileInput.onchange = async () => {
       for (const f of [...fileInput.files].slice(0, 4)) {
-        await sendImageFile(f);
+        await handleFile(f);
       }
       fileInput.value = '';
     };
@@ -187,10 +207,10 @@ async function main() {
 
   if (textInput) {
     textInput.addEventListener('paste', (e) => {
-      const f = [...(e.clipboardData?.files || [])].find((x) => x.type.startsWith('image/'));
+      const f = [...(e.clipboardData?.files || [])][0];
       if (f) {
         e.preventDefault();
-        sendImageFile(f);
+        handleFile(f);
       }
     });
   }

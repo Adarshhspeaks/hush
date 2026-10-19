@@ -328,6 +328,80 @@
   color: var(--text);
 }
 
+/* ---- File Attachments (PDFs, Docs, Archives) ---- */
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  min-width: 230px;
+  max-width: 310px;
+  box-shadow: 2px 2px 0 var(--border);
+  margin-top: 4px;
+}
+
+[data-theme="dark"] .file-card {
+  background: var(--surface-alt);
+}
+
+.file-icon-badge {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.file-name {
+  font-weight: 800;
+  font-size: 0.84rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.file-size {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.file-dl-btn {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-decoration: none;
+  background: var(--lemon);
+  color: #1B1B3A;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 1px 1px 0 var(--border);
+  flex-shrink: 0;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.file-dl-btn:hover {
+  filter: brightness(1.08);
+}
+
+.file-dl-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0;
+}
+
+
 /* ---- Reactions & Quick Picker ---- */
 .reacts { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
 .chip { background: var(--surface); color: var(--text); border: 2px solid var(--border); border-radius: 99px; padding: 0 8px; font-size: .85rem; }
