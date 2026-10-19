@@ -32,13 +32,17 @@ Anonymous end-to-end-encrypted chat rooms in your browser, no login, no phone nu
 - **Typing Indicator**: Real-time "typing…" hints (encrypted, ephemeral, never stored in history).
 - **History for Late Joiners**: Last 200 messages preserved in memory during room lifetime.
 
-### 📸 Media
+### 📸 Media & Attachments
 - **Photo Sharing**: Client canvas auto-resizes to JPEG and strips EXIF/GPS metadata.
 - **Photo Lightbox**: Fullscreen modal viewer with direct download link.
-- **Voice Notes**: Opus audio via MediaRecorder (up to 2 minutes) with audio player & download.
-- **Recording Indicator**: Live "recording…" status broadcast to room members.
+- **Interactive Voice Player**: Custom player with audio waveform amplitude bars, seek scrubber, 1x/1.5x/2x playback speed toggle, and save button.
+- **Encrypted File Attachments**: Share confidential PDFs, documents, text files, and archives up to 1.5 MB with dedicated file card and download button.
+- **Voice Notes & Recording**: Opus audio via MediaRecorder (up to 2 minutes) with live "recording…" indicator.
 
-### ✨ Fun
+### ✨ Fun & Interactive
+- **Encrypted Anonymous Polls**: Create encrypted multi-option polls (2 to 5 options); room members cast encrypted votes with live updating percentage bars and vote counters.
+- **Turn-Based Mini-Games**: Challenge room members to encrypted turn-based Tic-Tac-Toe directly in chat with real-time board updates and winner detection.
+- **Real-Time WebRTC P2P Voice Call**: Browser-to-browser voice calling directly peer-to-peer (media never touches the server), with encrypted signaling relay over Socket.io.
 - **24 Built-in Vector Stickers**: SVG packs across Reactions, Love, Funny, and Words with search.
 - **Make-Your-Own Stickers**: Square crop & WebP under 100 KB, saved in local IndexedDB (up to 60).
 - **Emoji Picker & Reactions**: 6 emoji categories, quick reaction row (👍, ❤️, 😂, 😮, 😢, 🙏), and counter chips.
