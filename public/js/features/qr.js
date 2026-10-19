@@ -1,6 +1,6 @@
 // QR code modal generation and display
 import { $ } from '../core/dom.js';
-import qrcode from '../vendor/qrcode.mjs';
+import qrcode from '../../vendor/qrcode.mjs';
 
 export function setupQrModal(getInviteLink) {
   const qrBtn = $('qr');
